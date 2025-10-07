@@ -1,4 +1,118 @@
+Perfeito, Keniel 👌 — segue abaixo o **README.md atualizado e completo**, agora com a **seção inicial “🧭 Como Participar do Experimento”** explicando exatamente **como os participantes devem criar o fork, clonar, commitar e enviar o código**, tudo no mesmo tom profissional e padronizado.
 
+Você pode usar esse arquivo diretamente como README principal do repositório **template**.
+
+---
+
+
+# 🧭 Como Participar do Experimento
+
+Bem-vindo(a)! 🎉  
+Você foi selecionado para participar do experimento **"Avaliação do Impacto de Ferramentas de Inteligência Artificial na Geração de Código"**.
+
+O objetivo é analisar **como ferramentas de IA influenciam produtividade e qualidade de código** em comparação com o desenvolvimento tradicional.
+
+Siga atentamente as instruções abaixo.  
+Cada etapa é essencial para garantir a validade científica do estudo. 💡
+
+---
+
+## 🧩 Etapas de Participação
+
+### 1. **Crie seu fork do repositório template**
+1. Acesse o repositório base:  
+   👉 [[https://github.com/ia-code-experiment/template-experiment-ai](https://github.com/kenielnunes/pfc-experiment-ai-code-template)]
+2. Clique em **Fork → Create fork**.
+3. Nomeie seu repositório da seguinte forma:
+```
+
+pfc-experiment-ai-code-template-seu-nome
+
+````
+Exemplo: `pfc-experiment-ai-code-template-joaosilva`
+
+---
+
+### 2. **Clone o seu fork para a sua máquina**
+```bash
+git clone https://github.com/pfc-experiment-ai-code-template/pfc-experiment-ai-code-template-joaosilva.git
+cd pfc-experiment-ai-code-template-joaosilva
+npm install
+````
+
+---
+
+### 3. **Implemente as tarefas**
+
+* As três tarefas estão nas pastas:
+
+  ```
+  /tarefa1-validate-user
+  /tarefa2-refactor-code
+  /tarefa3-todo-manager
+  ```
+* Leia o `README.md` dentro de cada pasta antes de começar.
+* Desenvolva o código e garanta que os testes passem (`npm test`).
+
+---
+
+### 4. **Commits e organização**
+
+Durante o desenvolvimento:
+
+* Faça **commits frequentes e claros** (a cada parte concluída).
+* Use a convenção abaixo:
+
+| Prefixo     | Uso                              |
+| ----------- | -------------------------------- |
+| `feat:`     | nova funcionalidade              |
+| `fix:`      | correção de bug                  |
+| `refactor:` | melhoria sem mudar comportamento |
+| `test:`     | criação/alteração de testes      |
+| `docs:`     | alteração em documentação        |
+| `chore:`    | manutenção ou setup              |
+
+📌 **Exemplos:**
+
+```
+feat: adiciona validação de CPF
+fix: corrige cálculo de idade mínima
+refactor: separa função de validação de senha
+```
+
+> 💡 Recomenda-se fazer **1 commit a cada 15–30 minutos** de progresso.
+
+---
+
+### 5. **Envie o código (push)**
+
+Após cada commit:
+
+```bash
+git push origin main
+```
+
+Isso enviará seu código para o GitHub, acionando automaticamente o **SonarCloud** para análise de qualidade.
+
+---
+
+### 6. **Regras de conduta**
+
+* Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT, Gemini ou nenhuma no grupo controle).
+* Não compartilhe seu código com outros participantes.
+* Não use soluções externas (StackOverflow, GitHub etc.).
+* É permitido usar prompts para compreender ou gerar código relacionado à tarefa.
+* Mantenha o código público para que as métricas possam ser coletadas.
+
+---
+
+### 7. **Após finalizar todas as tarefas**
+
+* Verifique se todos os testes (`npm test`) passam.
+* Confirme que os commits estão no GitHub.
+* Responda o **Questionário Pós-Experimento** enviado por e-mail.
+
+---
 
 # 🧠 Experimento: Impacto de Ferramentas de IA na Geração de Código
 
@@ -13,37 +127,38 @@ O objetivo deste experimento é **avaliar a influência de ferramentas de IA** (
 Cada participante deverá desenvolver **três tarefas independentes**, localizadas nas pastas:
 
 ```
-
 /tarefa1-validate-user
 /tarefa2-refactor-code
 /tarefa3-todo-manager
-
-````
+```
 
 Cada pasta contém:
-- Um arquivo `README.md` com a descrição detalhada da tarefa;
-- Arquivo(s) `.js` com o código base a ser implementado;
-- Pasta `/tests` com os testes automatizados;
-- Tempo limite estimado para conclusão.
+
+* Um arquivo `README.md` com a descrição detalhada da tarefa;
+* Arquivo(s) `.js` com o código base a ser implementado;
+* Pasta `/tests` com os testes automatizados;
+* Tempo limite estimado para conclusão.
 
 ---
 
 ## ⚙️ Preparação do Ambiente
 
 ### 1. Requisitos
-- **Node.js 20+**
-- **npm** (instalado junto com Node)
-- **VS Code** ou **Cursor IDE**
-- Acesso à internet (para usar a ferramenta de IA, se aplicável)
+
+* **Node.js 20+**
+* **npm** (instalado junto com Node)
+* **VS Code** ou **Cursor IDE**
+* Acesso à internet (para usar a ferramenta de IA, se aplicável)
 
 ### 2. Instalação
+
 Clone ou baixe o repositório (ou o **fork** que você recebeu):
 
 ```bash
-git clone https://github.com/kenielnunes/pfc-experiment-ai-code-template
-cd pfc-experiment-ai-template
+git clone <seu-repositorio-fork-url>
+cd experiment-ai-template
 npm install
-````
+```
 
 ---
 
@@ -220,8 +335,4 @@ Se tiver dúvidas durante o experimento:
 > O objetivo não é apenas “terminar o código”, mas **mostrar como você usa raciocínio e ferramentas de IA para resolver problemas de programação com qualidade**.
 
 Boa sorte e bom código! 🚀
-
-
-
-Quer que eu gere esses arquivos também?
 ```
