@@ -1,0 +1,15 @@
+{
+  "name": "pfc-experiment-ai-code-template",
+  "version": "1.0.0",
+  "description": "Template do experimento de IA na geração de código",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "coverage": "jest --coverage"
+  },
+  "author": "Keniel Alves Nunes",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
