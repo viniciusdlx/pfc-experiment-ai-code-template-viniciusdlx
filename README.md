@@ -1,10 +1,3 @@
-Perfeito, Keniel 👌 — segue abaixo o **README.md atualizado e completo**, agora com a **seção inicial “🧭 Como Participar do Experimento”** explicando exatamente **como os participantes devem criar o fork, clonar, commitar e enviar o código**, tudo no mesmo tom profissional e padronizado.
-
-Você pode usar esse arquivo diretamente como README principal do repositório **template**.
-
----
-
-
 # 🧭 Como Participar do Experimento
 
 Bem-vindo(a)! 🎉  
