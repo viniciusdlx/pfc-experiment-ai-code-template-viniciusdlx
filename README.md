@@ -40,7 +40,7 @@ Cada pasta contém:
 Clone ou baixe o repositório (ou o **fork** que você recebeu):
 
 ```bash
-git clone [<seu-repositorio-fork-url>](https://github.com/kenielnunes/pfc-experiment-ai-code-template)
+git clone https://github.com/kenielnunes/pfc-experiment-ai-code-template
 cd pfc-experiment-ai-template
 npm install
 ````
