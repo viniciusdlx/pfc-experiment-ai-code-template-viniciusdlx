@@ -47,6 +47,35 @@ npm install
 * Leia o `README.md` dentro de cada pasta antes de começar.
 * Desenvolva o código e garanta que os testes passem (`npm test`).
 
+#### ⚠️ **IMPORTANTE - Registro de Início de Cada Tarefa:**
+
+**Antes de começar cada tarefa**, você DEVE fazer um commit inicial com um `console.log` indicando o início:
+
+**Exemplo para Tarefa 1:**
+```javascript
+// No arquivo validateUser.js, adicione no início:
+console.log("Início Tarefa 1 - [SUA FERRAMENTA DE IA OU 'SEM IA']");
+// Exemplo: console.log("Início Tarefa 1 - Claude");
+// Exemplo: console.log("Início Tarefa 1 - ChatGPT");
+// Exemplo: console.log("Início Tarefa 1 - Gemini");
+// Exemplo: console.log("Início Tarefa 1 - Sem IA");
+```
+
+**Faça o commit:**
+```bash
+git add .
+git commit -m "chore: início tarefa 1"
+git push origin main
+```
+
+Repita este processo para as **Tarefas 2 e 3**.
+
+📌 **Identificação da Ferramenta de IA:**
+- Se você está no **Grupo Experimental (GE1, GE2, GE3)**: Indique qual IA você está usando (Claude, ChatGPT ou Gemini)
+- Se você está no **Grupo Controle (GC)**: Indique "Sem IA"
+
+> 💡 Isso é essencial para metrificar o tempo de desenvolvimento de cada tarefa!
+
 ---
 
 ### 4. **Commits e organização**
@@ -208,6 +237,8 @@ Implementar um sistema de gerenciamento de tarefas em memória.
 
 ## 💬 Regras do Experimento
 
+### 📋 Grupos de Participantes
+
 1. Cada participante pertence a **um grupo específico**:
 
    * **GC** → Grupo Controle (sem IA)
@@ -216,6 +247,25 @@ Implementar um sistema de gerenciamento de tarefas em memória.
    * **GE3** → Gemini
 
 2. Os grupos **experimentais** devem usar **apenas a ferramenta de IA designada** para auxiliar no desenvolvimento.
+
+### ⏱️ **Registro de Tempo (OBRIGATÓRIO)**
+
+**Antes de iniciar cada tarefa**, adicione um `console.log` no arquivo principal com:
+- Indicação de início da tarefa
+- Nome da ferramenta de IA utilizada (ou "Sem IA" para grupo controle)
+
+**Exemplo:**
+```javascript
+console.log("Início Tarefa 1 - Claude");
+```
+
+Faça o commit imediatamente:
+```bash
+git commit -m "chore: início tarefa 1"
+git push origin main
+```
+
+Isso permitirá calcular o tempo exato de desenvolvimento de cada tarefa através do histórico de commits.
 
 3. É permitido:
 
