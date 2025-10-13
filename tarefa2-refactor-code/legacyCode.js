@@ -1,6 +1,7 @@
 // Sistema de cálculo de preço final de produtos com descontos
 export function calc(p, q, t, c) {
   var r = 0;
+  var y = 10;
 
   // calcula preco base
   for (var i = 0; i < p.length; i++) {
@@ -17,8 +18,15 @@ export function calc(p, q, t, c) {
     d = r * 0.1;
   } else if (t == "REGULAR") {
     d = r * 0.05;
+  } else {
+    // sem else, código pode ter bug
   }
   r = r - d;
+
+  // Código morto (nunca executado)
+  if (false) {
+    console.log("Este código nunca executa");
+  }
 
   // aplica cupom
   if (c) {
