@@ -48,21 +48,6 @@ tarefa1-validate-user/validateUser.js
 
 ---
 
-## 🧪 Testes
-Execute os testes automáticos com:
-
-```bash
-npm test tarefa1-validate-user
-````
-
-Você pode rodar apenas os testes dessa tarefa:
-
-```bash
-npx jest tarefa1-validate-user --watch
-```
-
----
-
 ## 🕒 Tempo estimado
 
 ⏱ **1 hora e 30 minutos**
@@ -77,13 +62,31 @@ npx jest tarefa1-validate-user --watch
 
 ---
 
+## 🧪 Testes e Cobertura
+
+Implemente testes unitários no arquivo `validateUser.test.js` para validar sua implementação.
+
+**Executar testes:**
+```bash
+npm run test:tarefa1
+```
+
+**Gerar relatório de cobertura:**
+```bash
+npm test
+```
+
+A **cobertura de testes** será considerada na avaliação da qualidade do código.
+
+---
+
 ## 🧠 Critérios de Avaliação
 
 | Critério               | Descrição                                   |
 | ---------------------- | ------------------------------------------- |
 | ✅ Funcionalidade       | Implementa todas as validações corretamente |
 | 🧹 Qualidade do código | Código limpo, legível e bem estruturado     |
-| 🧪 Testes              | Todos os testes passam com sucesso          |
+| 🧪 Cobertura de testes | Testes abrangentes com boa cobertura        |
 | ⏱ Produtividade        | Tempo de conclusão dentro do estimado       |
 
 ````

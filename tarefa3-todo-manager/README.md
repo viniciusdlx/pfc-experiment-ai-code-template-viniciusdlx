@@ -52,22 +52,6 @@ A classe já está parcialmente implementada — complete os métodos conforme o
 
 ---
 
-## 🧪 Testes
-
-Execute os testes automáticos com:
-
-```bash
-npm test tarefa3-todo-manager
-````
-
-Ou apenas os desta tarefa:
-
-```bash
-npx jest tarefa3-todo-manager --watch
-```
-
----
-
 ## 🕒 Tempo estimado
 
 ⏱ **3 horas**
@@ -82,6 +66,24 @@ npx jest tarefa3-todo-manager --watch
 
 ---
 
+## 🧪 Testes e Cobertura
+
+Implemente testes unitários no arquivo `todoManager.test.js` para validar todos os métodos da classe.
+
+**Executar testes:**
+```bash
+npm run test:tarefa3
+```
+
+**Gerar relatório de cobertura:**
+```bash
+npm test
+```
+
+A **cobertura de testes** será considerada na avaliação. Teste todos os métodos e cenários (sucesso e erro).
+
+---
+
 ## 🧠 Critérios de Avaliação
 
 | Critério               | Descrição                                   |
@@ -89,4 +91,4 @@ npx jest tarefa3-todo-manager --watch
 | ⚙️ Funcionalidade      | Todos os métodos implementados corretamente |
 | 🧩 Estrutura OO        | Classe bem organizada e coesa               |
 | 🧹 Qualidade do código | Código legível e limpo                      |
-| 🧪 Testes              | Todos os testes passam                      |
+| 🧪 Cobertura de testes | Testes completos para todos os métodos      |

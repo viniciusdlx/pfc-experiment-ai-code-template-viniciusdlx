@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Template do experimento de IA na geração de código",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "jest --coverage",
-    "coverage": "jest --coverage"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:tarefa1": "NODE_OPTIONS=--experimental-vm-modules jest tarefa1-validate-user",
+    "test:tarefa2": "NODE_OPTIONS=--experimental-vm-modules jest tarefa2-refactor-code",
+    "test:tarefa3": "NODE_OPTIONS=--experimental-vm-modules jest tarefa3-todo-manager"
   },
   "author": "Keniel Alves Nunes",
   "license": "MIT",
