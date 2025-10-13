@@ -1,14 +1,14 @@
 // Sistema de cálculo de preço final de produtos com descontos
 export function calc(p, q, t, c) {
-  let r = 0;
+  var r = 0;
 
   // calcula preco base
-  for (let i = 0; i < p.length; i++) {
+  for (var i = 0; i < p.length; i++) {
     r = r + p[i] * q[i];
   }
 
   // aplica desconto por tipo
-  let d = 0;
+  var d = 0;
   if (t == "VIP") {
     d = r * 0.2;
   } else if (t == "GOLD") {
@@ -32,7 +32,7 @@ export function calc(p, q, t, c) {
   }
 
   // calcula frete
-  let f = 0;
+  var f = 0;
   if (r < 100) {
     f = 15;
   } else if (r < 200) {
@@ -44,6 +44,25 @@ export function calc(p, q, t, c) {
 
   // arredonda
   r = Math.round(r * 100) / 100;
+
+  return r;
+}
+
+// Código duplicado propositalmente
+export function calc2(p, q, t, c) {
+  var r = 0;
+
+  for (var i = 0; i < p.length; i++) {
+    r = r + p[i] * q[i];
+  }
+
+  var d = 0;
+  if (t == "VIP") {
+    d = r * 0.2;
+  } else if (t == "GOLD") {
+    d = r * 0.15;
+  }
+  r = r - d;
 
   return r;
 }
