@@ -13,25 +13,38 @@ Cada etapa é essencial para garantir a validade científica do estudo. 💡
 ## 🧩 Etapas de Participação
 
 ### 1. **Crie seu fork do repositório template**
+
 1. Acesse o repositório base:  
-   👉 [[https://github.com/ia-code-experiment/template-experiment-ai](https://github.com/kenielnunes/pfc-experiment-ai-code-template)]
-2. Clique em **Fork → Create fork**.
-3. Nomeie seu repositório da seguinte forma:
-```
+   👉 [https://github.com/kenielnunes/pfc-experiment-ai-code-template](https://github.com/kenielnunes/pfc-experiment-ai-code-template)
 
-pfc-experiment-ai-code-template-seu-nome
+2. No canto superior direito, clique em **Fork** → **Create fork**.
 
-````
-Exemplo: `pfc-experiment-ai-code-template-joaosilva`
+3. Na página de criação do fork:
+   - **Owner**: Será sua conta do GitHub
+   - **Repository name**: Renomeie para `pfc-experiment-ai-code-template-seunome`
+     - Exemplo: `pfc-experiment-ai-code-template-joaosilva`
+     - Exemplo: `pfc-experiment-ai-code-template-maria`
+   - **Description**: (opcional)
+   - ✅ Certifique-se de que está **público** (não privado)
+
+4. Clique em **Create fork**.
 
 ---
 
 ### 2. **Clone o seu fork para a sua máquina**
+
+Após criar o fork, copie a URL do **seu repositório** (não o original):
+
 ```bash
-git clone https://github.com/pfc-experiment-ai-code-template/pfc-experiment-ai-code-template-joaosilva.git
-cd pfc-experiment-ai-code-template-joaosilva
+# Substitua "SEU-USUARIO" e "SEU-NOME" pelos seus dados
+git clone https://github.com/SEU-USUARIO/pfc-experiment-ai-code-template-SEU-NOME.git
+
+# Exemplo real:
+# git clone https://github.com/joaosilva/pfc-experiment-ai-code-template-joaosilva.git
+
+cd pfc-experiment-ai-code-template-SEU-NOME
 npm install
-````
+```
 
 ---
 
