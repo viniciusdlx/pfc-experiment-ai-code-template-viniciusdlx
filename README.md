@@ -48,7 +48,64 @@ npm install
 
 ---
 
-### 3. **Implemente as tarefas**
+### 3. **⚠️ Configure o SonarCloud (OBRIGATÓRIO)**
+
+**Esta etapa é ESSENCIAL para a coleta de métricas de qualidade do código.**
+
+Configure sua própria conta no SonarCloud para análise automática da qualidade do código.
+
+#### 📋 Passos para configurar:
+
+1. **Crie conta no SonarCloud:**
+   - Acesse: [https://sonarcloud.io](https://sonarcloud.io)
+   - Clique em **"Log in"** → **"With GitHub"**
+   - Autorize o acesso à sua conta GitHub
+
+2. **Importe seu repositório:**
+   - Clique em **"+"** (canto superior direito) → **"Analyze new project"**
+   - Selecione seu fork: `pfc-experiment-ai-code-template-seunome`
+   - Clique em **"Set Up"**
+
+3. **Configure com GitHub Actions:**
+   - Escolha: **"With GitHub Actions"** (já está configurado no repositório)
+   - Copie o **SONAR_TOKEN** que aparece na tela
+
+4. **Adicione o token no GitHub:**
+   - Acesse seu fork no GitHub
+   - Vá em **Settings** → **Secrets and variables** → **Actions**
+   - Clique em **"New repository secret"**
+   - Name: `SONAR_TOKEN`
+   - Value: Cole o token copiado do SonarCloud
+   - Clique em **"Add secret"**
+
+5. **Atualize o arquivo `sonar-project.properties`:**
+   ```properties
+   # Substitua "SEU-USUARIO" pelo seu username do GitHub:
+   sonar.projectKey=SEU-USUARIO_pfc-experiment-ai-code-template-seunome
+   sonar.organization=SEU-USUARIO
+   
+   # Exemplo:
+   sonar.projectKey=joaosilva_pfc-experiment-ai-code-template-joaosilva
+   sonar.organization=joaosilva
+   ```
+
+6. **Teste a configuração:**
+   ```bash
+   git add sonar-project.properties
+   git commit -m "chore: configura SonarCloud"
+   git push origin main
+   ```
+   - Vá em **Actions** no GitHub e verifique se o workflow executou
+   - Acesse o SonarCloud e veja os resultados da análise
+
+7. **📤 IMPORTANTE - Compartilhe o link do seu projeto:**
+   - Copie a URL do seu projeto no SonarCloud
+   - Exemplo: `https://sonarcloud.io/project/overview?id=joaosilva_pfc-experiment-ai-code-template-joaosilva`
+   - **Envie esse link para o pesquisador** junto com o link do seu repositório GitHub
+
+---
+
+### 4. **Implemente as tarefas**
 
 * As três tarefas estão nas pastas:
 
@@ -91,7 +148,7 @@ Repita este processo para as **Tarefas 2 e 3**.
 
 ---
 
-### 4. **Commits e organização**
+### 5. **Commits e organização**
 
 Durante o desenvolvimento:
 
@@ -119,7 +176,7 @@ refactor: separa função de validação de senha
 
 ---
 
-### 5. **Envie o código (push)**
+### 6. **Envie o código (push)**
 
 Após cada commit:
 
@@ -131,7 +188,7 @@ Isso enviará seu código para o GitHub, acionando automaticamente o **SonarClou
 
 ---
 
-### 6. **Regras de conduta**
+### 7. **Regras de conduta**
 
 * Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT, Gemini ou nenhuma no grupo controle).
 * Não compartilhe seu código com outros participantes.
@@ -141,7 +198,7 @@ Isso enviará seu código para o GitHub, acionando automaticamente o **SonarClou
 
 ---
 
-### 7. **Após finalizar todas as tarefas**
+### 8. **Após finalizar todas as tarefas**
 
 * Verifique se todos os testes (`npm test`) passam.
 * Confirme que os commits estão no GitHub.
