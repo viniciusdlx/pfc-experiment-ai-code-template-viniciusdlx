@@ -4,11 +4,7 @@
 
 export class TodoManager {
   constructor() {
-    this.validUsername = "admin";
-    this.validPassword = "1234";
-    this.isLoggedIn = false;
-    this.tasks = [];
-    this.nextId = 1;
+
   }
 
   /**
