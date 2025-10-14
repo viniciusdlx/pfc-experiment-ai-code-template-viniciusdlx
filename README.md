@@ -190,11 +190,20 @@ Isso enviará seu código para o GitHub, acionando automaticamente o **SonarClou
 
 ### 7. **Regras de conduta**
 
-* Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT, Gemini ou nenhuma no grupo controle).
-* Não compartilhe seu código com outros participantes.
-* Não use soluções externas (StackOverflow, GitHub etc.).
+#### **Para Grupos Experimentais (GE1, GE2, GE3):**
+* Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT ou Gemini).
 * É permitido usar prompts para compreender ou gerar código relacionado à tarefa.
+* Não compartilhe seu código com outros participantes.
+
+#### **Para Grupo Controle (GC - Sem IA):**
+* **NÃO use nenhuma ferramenta de IA** para gerar ou sugerir código.
+* **Permitido**: Consultar documentação oficial, StackOverflow, GitHub, tutoriais e qualquer recurso online para **consultas e aprendizado**.
+* **Proibido**: Usar ferramentas como GitHub Copilot, Tabnine ou similares.
+* Não compartilhe seu código com outros participantes.
+
+#### **Para Todos os Grupos:**
 * Mantenha o código público para que as métricas possam ser coletadas.
+* Desenvolva o código você mesmo, usando apenas os recursos permitidos para seu grupo.
 
 ---
 
