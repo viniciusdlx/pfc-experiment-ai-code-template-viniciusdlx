@@ -1,115 +1,188 @@
-# 🔧 Tarefa 2 - Refatoração de Código Legado
+# 🔧 Tarefa 2 - Refatoração de Código Legacy
 
 ## 🎯 Objetivo
-Melhorar a qualidade de um código legado propositalmente ruim **sem alterar seu comportamento**.  
-Todos os testes existentes devem continuar passando após a refatoração.
+Refatore o código legacy fornecido em `legacyCode.js`, transformando-o em código limpo, legível e manutenível seguindo as melhores práticas de desenvolvimento.
+
+O código atual é um **sistema de e-commerce** com múltiplas regras de negócio complexas que possui diversos problemas de qualidade e manutenibilidade.
+
+**Categoria:** Refactoring, Clean Code, Design Patterns  
 
 ---
 
-## 📄 Código base
+## 📝 Descrição do Problema
 
-O arquivo `legacyCode.js` contém uma função `calc()` que **calcula o preço final de uma compra** considerando:
-- Preço base dos produtos (preço × quantidade)
-- Desconto por tipo de cliente (VIP, GOLD, SILVER, REGULAR)
-- Desconto por cupom promocional (PROMO10, PROMO20, PROMO30)
-- Valor do frete baseado no subtotal
+### **Código Legacy Atual:**
+O arquivo `legacyCode.js` contém uma classe `LegacyOrderProcessor` com 3 métodos principais:
+- `processOrder()` - Processamento de pedidos com múltiplas regras
+- `calculateOrderTotal()` - Cálculo de totais (código duplicado)
+- `validateAndProcessOrder()` - Validação complexa com alta ciclomática
 
-### ⚠️ Problemas identificados no código:
-
-1. **Nomes de variáveis ruins**: `p`, `q`, `t`, `c`, `r`, `d`, `f`
-2. **Falta de validação**: não verifica entradas inválidas
-3. **Estrutura confusa**: muitos `if/else` encadeados
-4. **Falta de modularização**: tudo em uma única função
-5. **Uso de `==` ao invés de `===`**
-6. **Magic numbers**: valores fixos sem constantes (0.2, 0.15, 15, 10, etc.)
-7. **Falta de documentação**: difícil entender o propósito
-
-Seu desafio é **refatorar esse código** mantendo o mesmo resultado da função.
+### **Problemas Identificados:**
+1. **Variáveis não utilizadas** (unusedVar1, unusedVar2, etc.)
+2. **Código morto** (if false, while false)
+3. **Expressões sempre verdadeiras** (if true || false)
+4. **Duplicação de código** entre funções
+5. **Alta complexidade ciclomática** (muitos ifs aninhados)
+6. **Nomes de variáveis não descritivos** (temp1, temp2, var1, etc.)
+7. **Falta de validação de entrada**
+8. **Lógica de negócio misturada** com cálculos
+9. **Falta de constantes** para valores mágicos
+10. **Aninhamento excessivo** de condicionais
+11. **Falta de tratamento de erros**
+12. **Responsabilidades misturadas** em uma única função
 
 ---
 
 ## ✅ Requisitos obrigatórios
 
-1. **Melhorar nomes de variáveis e funções**
-   - Usar nomes descritivos: `prices`, `quantities`, `customerType`, `couponCode`, `totalPrice`
-   - Renomear a função `calc()` para algo mais significativo
+### 1. **Refatoração Estrutural**
+- **Extrair constantes** para valores mágicos (descontos, taxas, etc.)
+- **Criar funções auxiliares** para cálculos específicos
+- **Separar responsabilidades** em funções menores
+- **Eliminar duplicação** de código
 
-2. **Extrair funções auxiliares**
-   - Criar funções separadas para cada responsabilidade:
-     - Cálculo do preço base
-     - Aplicação de desconto por tipo de cliente
-     - Aplicação de cupom
-     - Cálculo de frete
+### 2. **Melhorias de Qualidade**
+- **Remover variáveis não utilizadas**
+- **Eliminar código morto**
+- **Simplificar expressões condicionais**
+- **Melhorar nomes de variáveis e funções**
+- **Adicionar validação de entrada**
 
-3. **Substituir magic numbers por constantes**
-   - Criar constantes para descontos, valores de frete, etc.
-   - Exemplo: `const VIP_DISCOUNT = 0.2`
-
-4. **Adicionar validação de entradas**
-   - Verificar se arrays não estão vazios
-   - Validar tipo de cliente
-   - Validar cupom (se fornecido)
-
-5. **Melhorar estrutura**
-   - Usar objetos/maps ao invés de múltiplos `if/else`
-   - Usar `===` ao invés de `==`
-
-6. **Preservar comportamento**
-   - O resultado final deve ser idêntico ao código original
+### 3. **Organização do Código**
+- **Criar classes ou módulos** para organizar funcionalidades
+- **Implementar padrões de design** apropriados
+- **Adicionar tratamento de erros**
+- **Documentar funções** com JSDoc
 
 ---
 
 ## 🧩 Estrutura esperada
-Implemente o código refatorado em:
+
+Refatore o código em:
 
 ````
 
-tarefa2-refactor-code/refactor.js
+tarefa2-refactor-code/legacyCode.js
 
 ````
 
-Não altere o arquivo `legacyCode.js`, apenas use-o como referência.
+### **Funcionalidades obrigatórias:**
+- **Processamento de pedidos** limpo e organizado
+- **Cálculo de totais** sem duplicação
+- **Validação de dados** robusta
+- **Constantes** para valores mágicos
+- **Métodos auxiliares** bem definidos
+- **Tratamento de erros** adequado
+- **Refatoração da classe** em estrutura mais limpa
 
 ---
 
-## 💬 Dicas
+## 💡 Dicas de Refatoração
 
-* **Entenda o código primeiro**: Leia com atenção para entender o comportamento esperado
-* **Refatore em pequenos passos**: Mude uma coisa por vez
-* **Use funções auxiliares pequenas**: Cada função deve ter uma única responsabilidade
-* **Prefira objetos a if/else**: `const discounts = { VIP: 0.2, GOLD: 0.15, ... }`
-* **Nomes claros > comentários**: Um bom nome dispensa explicações
+### **1. Identifique Responsabilidades:**
+- Cálculo de subtotal
+- Aplicação de descontos
+- Cálculo de impostos
+- Cálculo de frete
+- Validação de dados
+- Processamento de pagamento
 
-### 📝 Exemplo de melhoria:
+### **2. Extraia Constantes:**
+```javascript
+const DISCOUNT_RATES = {
+  VIP: 0.15,
+  GOLD: 0.10,
+  SILVER: 0.05,
+  BRONZE: 0.02
+};
 
-**Antes:**
-```js
-let d = 0;
-if (t == "VIP") {
-  d = r * 0.2;
+const SHIPPING_COSTS = {
+  EXPRESS: 25,
+  STANDARD: 15,
+  ECONOMY: 8,
+  PICKUP: 0
+};
+```
+
+### **3. Crie Métodos Auxiliares:**
+```javascript
+class OrderProcessor {
+  calculateSubtotal(items) {
+    // Implementar cálculo de subtotal
+  }
+
+  applyUserDiscount(subtotal, userType) {
+    // Implementar desconto por tipo de usuário
+  }
+
+  calculateShipping(shippingType) {
+    // Implementar cálculo de frete
+  }
 }
 ```
 
-**Depois:**
-```js
-const CUSTOMER_DISCOUNTS = {
-  VIP: 0.2,
-  GOLD: 0.15,
-  SILVER: 0.1,
-  REGULAR: 0.05
+### **4. Use Early Returns:**
+```javascript
+function validateOrder(order) {
+  if (!order) return { isValid: false, error: 'Pedido não informado' };
+  if (!order.items || order.items.length === 0) return { isValid: false, error: 'Pedido sem itens' };
+  
+  // Validações adicionais...
+  return { isValid: true };
+}
+```
+
+### **5. Implemente Classes:**
+```javascript
+class OrderProcessor {
+  constructor() {
+    this.discountRates = DISCOUNT_RATES;
+    this.shippingCosts = SHIPPING_COSTS;
+  }
+  
+  processOrder(orderData, userInfo, paymentInfo, shippingInfo, promoInfo) {
+    // Implementar processamento
+  }
+}
+```
+
+---
+
+## 🧩 Exemplos de Uso
+
+```javascript
+// Exemplo de uso do código refatorado
+const orderProcessor = new OrderProcessor();
+
+const orderData = {
+  items: [
+    { id: 1, price: 100, quantity: 2 },
+    { id: 2, price: 50, quantity: 1 }
+  ]
 };
 
-function calculateCustomerDiscount(subtotal, customerType) {
-  const discountRate = CUSTOMER_DISCOUNTS[customerType] || 0;
-  return subtotal * discountRate;
-}
+const userInfo = { type: 'VIP', state: 'CA' };
+const paymentInfo = { method: 'CREDIT_CARD' };
+const shippingInfo = { type: 'STANDARD' };
+const promoInfo = { code: 'SAVE10' };
+
+const result = orderProcessor.processOrder(orderData, userInfo, paymentInfo, shippingInfo, promoInfo);
+console.log('Total:', result.total);
+console.log('Breakdown:', result.breakdown);
 ```
 
 ---
 
 ## 🧪 Testes e Cobertura
 
-Implemente testes no arquivo `refactor.test.js` para garantir que o código refatorado mantém o mesmo comportamento do código legado.
+Implemente testes unitários no arquivo `refactor.test.js` para validar:
+
+### **5 Testes Essenciais:**
+1. ✅ **Cálculo de total simples** - pedido básico com 2 itens
+2. ✅ **Cálculo com descontos** - produtos + cliente PREMIUM + cupom SAVE20
+3. ✅ **Validação de dados** - pedido válido com todos os dados obrigatórios
+4. ✅ **Cenário completo** - usuário VIP + 3 itens + cupom + frete express + cartão
+5. ✅ **Tratamento de erros** - pedido inválido com múltiplos problemas
 
 **Executar testes:**
 ```bash
@@ -121,18 +194,54 @@ npm run test:tarefa2
 npm test
 ```
 
-A **cobertura de testes** será considerada na avaliação. Garanta que o código refatorado está bem testado.
+A **cobertura de testes** será considerada na avaliação.
 
 ---
 
 ## 🧠 Critérios de Avaliação
 
-| Critério                       | Descrição                          |
-| ------------------------------ | ---------------------------------- |
-| 🔁 Redução de duplicação       | Código sem repetições              |
-| 🧩 Legibilidade                | Estrutura clara e bem nomeada      |
-| 🧱 Manutenção de comportamento | Comportamento idêntico ao original |
-| 🧪 Cobertura de testes         | Testes que validam a refatoração   |
-| 🧹 Qualidade geral             | Organização e boas práticas        |
+| Critério                       | Descrição                                    |
+| ------------------------------ | -------------------------------------------- |
+| ✅ Funcionalidade              | Código refatorado funciona corretamente      |
+| ✅ Eliminação de problemas     | Remove variáveis não utilizadas, código morto |
+| ✅ Organização                 | Código bem estruturado e organizado          |
+| ✅ Constantes                  | Valores mágicos extraídos para constantes    |
+| ✅ Funções auxiliares          | Responsabilidades separadas em funções       |
+| ✅ Eliminação de duplicação    | Código duplicado removido ou consolidado     |
+| ✅ Tratamento de erros         | Validação e tratamento de erros implementado |
+| ✅ Documentação                | Funções documentadas com JSDoc               |
+| ✅ Nomes descritivos           | Variáveis e funções com nomes claros         |
+| ✅ Complexidade reduzida       | Complexidade ciclomática reduzida            |
+| 🧹 Qualidade do código         | Código limpo e seguindo boas práticas        |
+| 🧪 Cobertura de testes         | Testes abrangentes para todos os cenários   |
+
+---
+
+## 🎯 Por que é PERFEITO para o experimento:
+
+### **🤖 IA vai ter DIFICULDADE:**
+- **Análise de contexto**: IA pode não entender todas as regras de negócio
+- **Refatoração complexa**: Pode fazer mudanças superficiais sem melhorar estrutura
+- **Padrões de design**: Pode não aplicar padrões apropriados
+- **Validação**: Pode não implementar validação robusta
+
+### **👨‍💻 Senior resolve com EXPERIÊNCIA:**
+- **Reconhece padrões**: Sabe quando aplicar refatorações específicas
+- **Estrutura**: Organiza código de forma lógica e manutenível
+- **Validação**: Implementa validação robusta e tratamento de erros
+- **Padrões**: Aplica padrões de design apropriados
+
+### **👶 Qualquer pessoa pode entender:**
+- **Problemas visíveis**: Fácil de identificar problemas no código
+- **Objetivo claro**: Refatorar para melhorar qualidade
+- **Resultado mensurável**: Código antes vs depois
+
+---
+
+## 📚 Referências
+
+- [Clean Code - Robert Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+- [Refactoring - Martin Fowler](https://refactoring.com/)
+- [JavaScript Best Practices](https://github.com/airbnb/javascript)
 
 ````
