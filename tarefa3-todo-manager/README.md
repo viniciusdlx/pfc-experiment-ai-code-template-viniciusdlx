@@ -52,12 +52,6 @@ A classe já está parcialmente implementada — complete os métodos conforme o
 
 ---
 
-## 🕒 Tempo estimado
-
-⏱ **3 horas**
-
----
-
 ## 💬 Dicas
 
 * Valide sempre o estado de login antes de manipular tarefas.

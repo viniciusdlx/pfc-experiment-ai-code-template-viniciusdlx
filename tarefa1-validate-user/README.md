@@ -48,12 +48,6 @@ tarefa1-validate-user/validateUser.js
 
 ---
 
-## 🕒 Tempo estimado
-
-⏱ **1 hora e 30 minutos**
-
----
-
 ## 💬 Dicas
 
 * Teste cada regra separadamente antes de juntar tudo.
@@ -87,6 +81,5 @@ A **cobertura de testes** será considerada na avaliação da qualidade do códi
 | ✅ Funcionalidade       | Implementa todas as validações corretamente |
 | 🧹 Qualidade do código | Código limpo, legível e bem estruturado     |
 | 🧪 Cobertura de testes | Testes abrangentes com boa cobertura        |
-| ⏱ Produtividade        | Tempo de conclusão dentro do estimado       |
 
 ````

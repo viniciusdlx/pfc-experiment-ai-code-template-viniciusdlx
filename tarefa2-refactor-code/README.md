@@ -72,12 +72,6 @@ Não altere o arquivo `legacyCode.js`, apenas use-o como referência.
 
 ---
 
-## 🕒 Tempo estimado
-
-⏱ **2 horas**
-
----
-
 ## 💬 Dicas
 
 * **Entenda o código primeiro**: Leia com atenção para entender o comportamento esperado
