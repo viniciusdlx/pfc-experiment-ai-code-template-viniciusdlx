@@ -1,5 +1,3 @@
-import { TodoManager, Task } from './todoManager.js';
-
 describe('Sistema de Gerenciamento de Tarefas', () => {
   // Implementar testes para createTask
   test('deve criar uma tarefa com dados básicos e código Jira', () => {
