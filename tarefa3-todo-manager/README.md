@@ -205,17 +205,28 @@ todoManager.deleteTask(task2.id);
 
 ## 🧪 Testes e Cobertura
 
-Implemente testes unitários no arquivo `todoManager.test.js` para validar:
+Os testes já estão implementados no arquivo `todoManager.test.js` com **descrições detalhadas** do que deve ser testado. Você só precisa implementar as funções!
 
-- **Criação de tarefas** com diferentes prioridades
-- **Listagem de tarefas** (vazia e com tarefas)
-- **Atualização de tarefas** (título, descrição, prioridade)
-- **Remoção de tarefas** (existente e inexistente)
-- **Mudança de status** (transições válidas e inválidas)
-- **Filtros** por status e prioridade
-- **Busca** por título (case insensitive)
-- **Contagem** de tarefas por status
-- **Casos extremos** (ID inválido, dados nulos, etc.)
+### **13 Testes Implementados:**
+
+#### **Testes Básicos (9 testes):**
+- ✅ **Criação de tarefa** - dados básicos e código Jira
+- ✅ **Listagem de tarefas** - array com todas as tarefas
+- ✅ **Atualização de tarefa** - título, descrição, prioridade
+- ✅ **Remoção de tarefa** - por ID
+- ✅ **Mudança de status** - para DONE com completedAt
+- ✅ **Filtro por status** - apenas tarefas TODO
+- ✅ **Filtro por prioridade** - apenas tarefas HIGH
+- ✅ **Busca por título** - palavra-chave
+- ✅ **Contagem por status** - contadores corretos
+
+#### **Testes de Códigos Jira (2 testes):**
+- ✅ **Geração de códigos** - PROJ-1, PROJ-2, PROJ-3
+- ✅ **Busca por código** - encontrar tarefa por código
+
+#### **Testes de Integração (2 testes):**
+- ✅ **Ciclo completo** - criar → atualizar → mudar status → filtrar → buscar
+- ✅ **Casos extremos** - operações em tarefas inexistentes
 
 **Executar testes:**
 ```bash
