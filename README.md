@@ -318,9 +318,9 @@ Implementar um sistema de gerenciamento de tarefas em memória.
 1. Cada participante pertence a **um grupo específico**:
 
    * **GC** → Grupo Controle (sem IA)
-   * **GE1** → Claude
+   * **GE1** → Gemini
    * **GE2** → ChatGPT
-   * **GE3** → Gemini
+   * **GE3** → Claude
 
 2. Os grupos **experimentais** devem usar **apenas a ferramenta de IA designada** para auxiliar no desenvolvimento.
 
