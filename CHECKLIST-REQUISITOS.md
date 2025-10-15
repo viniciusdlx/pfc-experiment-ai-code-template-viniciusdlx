@@ -83,8 +83,8 @@
 - [ ] ✅ `TodoManager` - Classe principal
 
 ### **Enums:**
-- [ ] ✅ `TaskStatus` - todo, in_progress, done, cancelled
-- [ ] ✅ `Priority` - low, medium, high, urgent
+- [ ] ✅ Status - todo, in_progress, done
+- [ ] ✅ Priority - low, medium, high
 
 ### **Sistema de Códigos (Jira-like):**
 - [ ] ✅ Geração automática de códigos (PROJ-123, TASK-456)

@@ -286,7 +286,6 @@ Implementar um sistema simples de validação de dados de usuário.
 * Tratamento de erros personalizados.
 * Retornar objeto com status e mensagens.
 
-⏱ Tempo estimado: **1h30**
 
 ---
 
@@ -298,7 +297,6 @@ Refatorar um código legado propositalmente ruim, mantendo a mesma saída.
 * Remover duplicações.
 * Adicionar tratamento de erros.
 
-⏱ Tempo estimado: **2h**
 
 ---
 
@@ -310,7 +308,6 @@ Implementar um sistema de gerenciamento de tarefas em memória.
 * Validação de dados e tratamento de erros.
 * Paginação local e login simulado.
 
-⏱ Tempo estimado: **3h**
 
 ---
 

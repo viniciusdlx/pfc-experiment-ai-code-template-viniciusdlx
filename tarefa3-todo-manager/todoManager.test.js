@@ -1,4 +1,4 @@
-import { TodoManager, Task, TaskStatus, Priority } from './todoManager.js';
+import { TodoManager, Task } from './todoManager.js';
 
 describe('Sistema de Gerenciamento de Tarefas', () => {
   // Implementar testes para createTask

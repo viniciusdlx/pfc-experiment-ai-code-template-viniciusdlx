@@ -1,43 +1,38 @@
-# ✅ Tarefa 3 - Gerenciador de Tarefas
+# 🗓️ Tarefa 3 - Gerenciador de Tarefas (TodoManager)
 
 ## 🎯 Objetivo
-Implementar um **sistema de gerenciamento de tarefas** em JavaScript, utilizando classes e métodos para organizar e manipular tarefas.
-
-**Dificuldade:** Medium  
-**Tempo estimado:** 30-45 minutos  
-**Categoria:** Classes, Arrays, Objetos, JavaScript
+Implementar um sistema simples de gerenciamento de tarefas com funcionalidades básicas de CRUD e filtragem.
 
 ---
 
 ## 📝 Descrição do Problema
 
-### **Funcionalidades Obrigatórias:**
-1. **Criar tarefas** com título, descrição e prioridade
-2. **Listar tarefas** existentes
-3. **Atualizar tarefas** (título, descrição, prioridade)
-4. **Remover tarefas** por ID
-5. **Alterar status** das tarefas (TODO → IN_PROGRESS → DONE)
-6. **Filtrar tarefas** por status e prioridade
-7. **Buscar tarefas** por título
-8. **Contar tarefas** por status
+Você deve criar um sistema para gerenciar tarefas, permitindo criar, listar, atualizar, remover e filtrar tarefas. Cada tarefa terá um status e uma prioridade.
+
+### **Funcionalidades:**
+1.  **Criar tarefas** com título, descrição e prioridade
+2.  **Listar tarefas** existentes
+3.  **Atualizar tarefas** (título, descrição, prioridade)
+4.  **Remover tarefas** por ID
+5.  **Alterar status** das tarefas (TODO → IN_PROGRESS → DONE)
+6.  **Filtrar tarefas** por status e prioridade
+7.  **Buscar tarefas** por título
+8.  **Contar tarefas** por status
 
 ### **Estrutura de Dados:**
+
+**Status possíveis:**
+- `'todo'` - Tarefa pendente
+- `'in_progress'` - Tarefa em andamento  
+- `'done'` - Tarefa concluída
+
+**Prioridades possíveis:**
+- `'low'` - Prioridade baixa
+- `'medium'` - Prioridade média
+- `'high'` - Prioridade alta
+
+**Estrutura da tarefa:**
 ```javascript
-// Status possíveis
-TaskStatus = {
-  TODO: 'todo',
-  IN_PROGRESS: 'in_progress', 
-  DONE: 'done'
-}
-
-// Prioridades possíveis
-Priority = {
-  LOW: 'low',
-  MEDIUM: 'medium',
-  HIGH: 'high'
-}
-
-// Estrutura da tarefa
 Task = {
   id: 1,
   code: "PROJ-123", // Código único estilo Jira
@@ -61,227 +56,81 @@ Task = {
 
 ## ✅ Requisitos obrigatórios
 
-### 1. **Classe Task**
-- `constructor(id, title, description, priority)` - Cria nova tarefa
-- `updateStatus(newStatus)` - Muda status da tarefa
-- `isOverdue()` - Verifica se está atrasada (opcional)
+### 1. **Gerenciamento de Tarefas**
+- **Criar tarefas** com título, descrição e prioridade
+- **Cada tarefa deve ter** um ID único e um código único (estilo Jira)
+- **Cada tarefa deve ter** status inicial como 'todo'
+- **Cada tarefa deve ter** timestamps de criação e atualização
+- **Atualizar tarefas** existentes (título, descrição, prioridade)
+- **Remover tarefas** por ID
+- **Listar todas as tarefas** existentes
 
-### 2. **Classe TodoManager**
-- `createTask(title, description, priority)` - Cria nova tarefa com código único
-- `listTasks()` - Lista todas as tarefas
-- `updateTask(id, data)` - Atualiza tarefa existente
-- `deleteTask(id)` - Remove tarefa
-- `changeTaskStatus(id, newStatus)` - Muda status
-- `filterTasksByStatus(status)` - Filtra por status
-- `filterTasksByPriority(priority)` - Filtra por prioridade
-- `searchTasks(query)` - Busca por título
-- `getTaskCounts()` - Conta tarefas por status
-- `generateTaskCode(projectKey)` - Gera código único (PROJ-123)
-- `findTaskByCode(code)` - Busca tarefa por código
+### 2. **Controle de Status**
+- **Mudar status** das tarefas entre 'todo', 'in_progress' e 'done'
+- **Registrar data de conclusão** quando status for 'done'
+- **Atualizar timestamp** sempre que tarefa for modificada
+
+### 3. **Sistema de Códigos Únicos**
+- **Gerar códigos automáticos** no formato PROJ-123, TASK-456, etc.
+- **Suportar múltiplos projetos** com códigos únicos por projeto
+- **Buscar tarefas por código** (ex: encontrar tarefa pelo código PROJ-123)
+
+### 4. **Filtros e Busca**
+- **Filtrar tarefas por status** (mostrar apenas 'todo', 'in_progress' ou 'done')
+- **Filtrar tarefas por prioridade** (mostrar apenas 'low', 'medium' ou 'high')
+- **Buscar tarefas por título** (busca parcial no título)
+- **Contar tarefas por status** (quantas tarefas em cada status)
+
+### 5. **Validação e Tratamento de Erros**
+- **Validar dados de entrada** antes de criar/atualizar tarefas
+- **Tratar operações em tarefas inexistentes** (IDs inválidos)
+- **Validar status** antes de mudanças (apenas status válidos)
+- **Retornar erros apropriados** para operações inválidas
 
 ---
 
 ## 🧩 Estrutura esperada
-
-Implemente as classes em:
+O código deve ser implementado no arquivo:
 
 ````
-
 tarefa3-todo-manager/todoManager.js
-
 ````
 
-### **Classes obrigatórias:**
-- `Task` - Representa uma tarefa individual (com código Jira)
-- `TodoManager` - Gerencia todas as tarefas (com geração de códigos)
-
----
-
-## 💡 Dicas de Implementação
-
-### **Classe Task:**
-```javascript
-export class Task {
-  constructor(id, title, description, priority = Priority.MEDIUM) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.status = TaskStatus.TODO;
-    this.priority = priority;
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    this.completedAt = null;
-  }
-
-  updateStatus(newStatus) {
-    // Validar se newStatus é válido
-    // Atualizar this.status
-    // Atualizar this.updatedAt
-    // Se status for DONE, definir this.completedAt
-  }
-}
-```
-
-### **Classe TodoManager:**
-```javascript
-export class TodoManager {
-  constructor() {
-    this.tasks = [];
-    this.nextTaskId = 1;
-  }
-
-  createTask(title, description, priority = Priority.MEDIUM) {
-    // Criar nova Task com ID único
-    // Adicionar ao array this.tasks
-    // Retornar a tarefa criada
-  }
-
-  listTasks() {
-    // Retornar array de todas as tarefas
-  }
-
-  findTaskById(id) {
-    // Método auxiliar para encontrar tarefa por ID
-  }
-}
-```
-
----
-
-## 🧩 Exemplos de Uso
-
-```javascript
-// Criar gerenciador
-const todoManager = new TodoManager();
-
-// Criar tarefas (códigos gerados automaticamente)
-const task1 = todoManager.createTask(
-  "Implementar login", 
-  "Criar sistema de autenticação", 
-  Priority.HIGH
-);
-console.log(task1.code); // "PROJ-1"
-
-const task2 = todoManager.createTask(
-  "Documentar API", 
-  "Escrever documentação da API", 
-  Priority.MEDIUM
-);
-console.log(task2.code); // "PROJ-2"
-
-// Listar tarefas
-console.log(todoManager.listTasks());
-
-// Atualizar tarefa
-todoManager.updateTask(task1.id, {
-  title: "Implementar autenticação JWT",
-  priority: Priority.HIGH
-});
-
-// Mudar status
-todoManager.changeTaskStatus(task1.id, TaskStatus.IN_PROGRESS);
-todoManager.changeTaskStatus(task1.id, TaskStatus.DONE);
-
-// Filtrar tarefas
-const todoTasks = todoManager.filterTasksByStatus(TaskStatus.TODO);
-const highPriorityTasks = todoManager.filterTasksByPriority(Priority.HIGH);
-
-// Buscar tarefas
-const searchResults = todoManager.searchTasks("login");
-
-// Buscar por código
-const taskByCode = todoManager.findTaskByCode("PROJ-1");
-console.log(taskByCode.title); // "Implementar login"
-
-// Contar tarefas
-const counts = todoManager.getTaskCounts();
-console.log(counts); // { todo: 1, in_progress: 0, done: 1 }
-
-// Remover tarefa
-todoManager.deleteTask(task2.id);
-```
+### **Estrutura obrigatória:**
+- **Classe ou função para representar tarefas** - deve armazenar todos os dados da tarefa
+- **Classe ou função para gerenciar tarefas** - deve implementar todas as funcionalidades
+- **Sistema de códigos únicos** - deve gerar e gerenciar códigos estilo Jira
+- **Validação de dados** - deve validar entradas e tratar erros
 
 ---
 
 ## 🧪 Testes e Cobertura
 
-Os testes já estão implementados no arquivo `todoManager.test.js` com **descrições detalhadas** do que deve ser testado. Você só precisa implementar as funções!
+Implemente testes unitários no arquivo `todoManager.test.js` para validar:
 
-### **13 Testes Implementados:**
-
-#### **Testes Básicos (9 testes):**
-- ✅ **Criação de tarefa** - dados básicos e código Jira
-- ✅ **Listagem de tarefas** - array com todas as tarefas
-- ✅ **Atualização de tarefa** - título, descrição, prioridade
-- ✅ **Remoção de tarefa** - por ID
-- ✅ **Mudança de status** - para DONE com completedAt
-- ✅ **Filtro por status** - apenas tarefas TODO
-- ✅ **Filtro por prioridade** - apenas tarefas HIGH
-- ✅ **Busca por título** - palavra-chave
-- ✅ **Contagem por status** - contadores corretos
-
-#### **Testes de Códigos Jira (2 testes):**
-- ✅ **Geração de códigos** - PROJ-1, PROJ-2, PROJ-3
-- ✅ **Busca por código** - encontrar tarefa por código
-
-#### **Testes de Integração (2 testes):**
-- ✅ **Ciclo completo** - criar → atualizar → mudar status → filtrar → buscar
-- ✅ **Casos extremos** - operações em tarefas inexistentes
+### **5 Testes Essenciais:**
+1.  ✅ **Criação de tarefa** - com título, descrição, prioridade e código Jira automático.
+2.  ✅ **Atualização de tarefa** - mudar título, descrição, prioridade e status.
+3.  ✅ **Listagem e filtragem** - listar todas, filtrar por status e por prioridade.
+4.  ✅ **Busca e remoção** - buscar por título e remover uma tarefa existente.
+5.  ✅ **Tratamento de erros** - tentar atualizar/remover tarefa inexistente, mudar status inválido.
 
 **Executar testes:**
 ```bash
 npm run test:tarefa3
 ```
 
-**Gerar relatório de cobertura:**
-```bash
-npm test
-```
-
-A **cobertura de testes** será considerada na avaliação.
+A **cobertura de testes** será considerada na avaliação da qualidade do código.
 
 ---
 
 ## 🧠 Critérios de Avaliação
 
-| Critério                       | Descrição                                    |
-| ------------------------------ | -------------------------------------------- |
-| ✅ Funcionalidade              | Todos os métodos implementados corretamente  |
-| ✅ Estrutura OO                | Classes bem organizadas e coesas             |
-| ✅ Gerenciamento de estado     | IDs únicos, datas atualizadas corretamente   |
-| ✅ Validação de dados          | Validação de entrada e tratamento de erros   |
-| ✅ Filtros e busca             | Filtros e busca funcionando corretamente     |
-| ✅ Tratamento de bordas        | Casos extremos e edge cases                  |
-| 🧹 Qualidade do código         | Código limpo, legível e bem estruturado      |
-| 🧪 Cobertura de testes         | Testes abrangentes para todos os cenários   |
-
----
-
-## 🎯 Por que é PERFEITO para o experimento:
-
-### **🤖 IA vai ter DIFICULDADE:**
-- **Estrutura de classes**: Pode não organizar bem as responsabilidades
-- **Gerenciamento de estado**: Pode não manter IDs únicos corretamente
-- **Validação**: Pode não implementar validação robusta
-- **Filtros**: Pode não implementar filtros eficientes
-
-### **👨‍💻 Senior resolve com EXPERIÊNCIA:**
-- **Organização**: Estrutura classes de forma lógica
-- **Estado**: Mantém IDs únicos e datas corretamente
-- **Validação**: Implementa validação robusta
-- **Performance**: Implementa filtros e busca eficientes
-
-### **👶 Qualquer pessoa pode entender:**
-- **Conceito simples**: Gerenciador de tarefas é familiar
-- **Funcionalidades claras**: CRUD básico é intuitivo
-- **Sem barreiras**: Não precisa conhecer algoritmos complexos
-
----
-
-## 📚 Referências
-
-- [JavaScript Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
-- [Array Methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-- [Object Manipulation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects)
+| Critério               | Descrição                                   |
+| ---------------------- | ------------------------------------------- |
+| ✅ Funcionalidade       | Implementa a lógica de negócio corretamente |
+| 🚀 Performance         | Solução eficiente (tempo e espaço)          |
+| 🧹 Qualidade do código | Código limpo, legível e bem estruturado     |
+| 🧪 Cobertura de testes | Testes abrangentes com boa cobertura        |
 
 ````
