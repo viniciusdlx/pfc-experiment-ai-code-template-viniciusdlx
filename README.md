@@ -20,6 +20,7 @@ Cada etapa é essencial para garantir a validade científica do estudo. 💡
 2. No canto superior direito, clique em **Fork** → **Create fork**.
 
 3. Na página de criação do fork:
+
    - **Owner**: Será sua conta do GitHub
    - **Repository name**: Renomeie para `pfc-experiment-ai-code-template-seunome`
      - Exemplo: `pfc-experiment-ai-code-template-joaosilva`
@@ -57,20 +58,24 @@ Configure sua própria conta no SonarCloud para análise automática da qualidad
 #### 📋 Passos para configurar:
 
 1. **Crie conta no SonarCloud:**
+
    - Acesse: [https://sonarcloud.io](https://sonarcloud.io)
    - Clique em **"Log in"** → **"With GitHub"**
    - Autorize o acesso à sua conta GitHub
 
 2. **Importe seu repositório:**
+
    - Clique em **"+"** (canto superior direito) → **"Analyze new project"**
    - Selecione seu fork: `pfc-experiment-ai-code-template-seunome`
    - Clique em **"Set Up"**
 
 3. **Configure com GitHub Actions:**
+
    - Escolha: **"With GitHub Actions"** (já está configurado no repositório)
    - Copie o **SONAR_TOKEN** que aparece na tela
 
 4. **Adicione o token no GitHub:**
+
    - Acesse seu fork no GitHub
    - Vá em **Settings** → **Secrets and variables** → **Actions**
    - Clique em **"New repository secret"**
@@ -79,22 +84,25 @@ Configure sua própria conta no SonarCloud para análise automática da qualidad
    - Clique em **"Add secret"**
 
 5. **Atualize o arquivo `sonar-project.properties`:**
+
    ```properties
    # Substitua "SEU-USUARIO" pelo seu username do GitHub:
    sonar.projectKey=SEU-USUARIO_pfc-experiment-ai-code-template-seunome
    sonar.organization=SEU-USUARIO
-   
+
    # Exemplo:
    sonar.projectKey=joaosilva_pfc-experiment-ai-code-template-joaosilva
    sonar.organization=joaosilva
    ```
 
 6. **Teste a configuração:**
+
    ```bash
    git add sonar-project.properties
    git commit -m "chore: configura SonarCloud"
    git push origin main
    ```
+
    - Vá em **Actions** no GitHub e verifique se o workflow executou
    - Acesse o SonarCloud e veja os resultados da análise
 
@@ -107,21 +115,23 @@ Configure sua própria conta no SonarCloud para análise automática da qualidad
 
 ### 4. **Implemente as tarefas**
 
-* As três tarefas estão nas pastas:
+- As três tarefas estão nas pastas:
 
   ```
   /tarefa1-validate-user
   /tarefa2-refactor-code
   /tarefa3-todo-manager
   ```
-* Leia o `README.md` dentro de cada pasta antes de começar.
-* Desenvolva o código e garanta que os testes passem (`npm test`).
+
+- Leia o `README.md` dentro de cada pasta antes de começar.
+- Desenvolva o código e garanta que os testes passem (`npm test`).
 
 #### ⚠️ **IMPORTANTE - Registro de Início de Cada Tarefa:**
 
 **Antes de começar cada tarefa**, você DEVE fazer um commit inicial com um `console.log` indicando o início:
 
 **Exemplo para Tarefa 1:**
+
 ```javascript
 // No arquivo validateUser.js, adicione no início:
 console.log("Início Tarefa 1 - [SUA FERRAMENTA DE IA OU 'SEM IA']");
@@ -132,6 +142,7 @@ console.log("Início Tarefa 1 - [SUA FERRAMENTA DE IA OU 'SEM IA']");
 ```
 
 **Faça o commit:**
+
 ```bash
 git add .
 git commit -m "chore: início tarefa 1"
@@ -141,6 +152,7 @@ git push origin main
 Repita este processo para as **Tarefas 2 e 3**.
 
 📌 **Identificação da Ferramenta de IA:**
+
 - Se você está no **Grupo Experimental (GE1, GE2, GE3)**: Indique qual IA você está usando (Claude, ChatGPT ou Gemini)
 - Se você está no **Grupo Controle (GC)**: Indique "Sem IA"
 
@@ -152,8 +164,8 @@ Repita este processo para as **Tarefas 2 e 3**.
 
 Durante o desenvolvimento:
 
-* Faça **commits frequentes e claros** (a cada parte concluída).
-* Use a convenção abaixo:
+- Faça **commits frequentes e claros** (a cada parte concluída).
+- Use a convenção abaixo:
 
 | Prefixo     | Uso                              |
 | ----------- | -------------------------------- |
@@ -191,27 +203,30 @@ Isso enviará seu código para o GitHub, acionando automaticamente o **SonarClou
 ### 7. **Regras de conduta**
 
 #### **Para Grupos Experimentais (GE1, GE2, GE3):**
-* Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT ou Gemini).
-* É permitido usar prompts para compreender ou gerar código relacionado à tarefa.
-* Não compartilhe seu código com outros participantes.
+
+- Use **somente a ferramenta de IA designada ao seu grupo** (Claude, ChatGPT ou Gemini).
+- É permitido usar prompts para compreender ou gerar código relacionado à tarefa.
+- Não compartilhe seu código com outros participantes.
 
 #### **Para Grupo Controle (GC - Sem IA):**
-* **NÃO use nenhuma ferramenta de IA** para gerar ou sugerir código.
-* **Permitido**: Consultar documentação oficial, StackOverflow, GitHub, tutoriais e qualquer recurso online para **consultas e aprendizado**.
-* **Proibido**: Usar ferramentas como GitHub Copilot, Tabnine ou similares.
-* Não compartilhe seu código com outros participantes.
+
+- **NÃO use nenhuma ferramenta de IA** para gerar ou sugerir código.
+- **Permitido**: Consultar documentação oficial, StackOverflow, GitHub, tutoriais e qualquer recurso online para **consultas e aprendizado**.
+- **Proibido**: Usar ferramentas como GitHub Copilot, Tabnine ou similares.
+- Não compartilhe seu código com outros participantes.
 
 #### **Para Todos os Grupos:**
-* Mantenha o código público para que as métricas possam ser coletadas.
-* Desenvolva o código você mesmo, usando apenas os recursos permitidos para seu grupo.
+
+- Mantenha o código público para que as métricas possam ser coletadas.
+- Desenvolva o código você mesmo, usando apenas os recursos permitidos para seu grupo.
 
 ---
 
 ### 8. **Após finalizar todas as tarefas**
 
-* Verifique se todos os testes (`npm test`) passam.
-* Confirme que os commits estão no GitHub.
-* Responda o **Questionário Pós-Experimento** enviado por e-mail.
+- Verifique se todos os testes (`npm test`) passam.
+- Confirme que os commits estão no GitHub.
+- Responda o **Questionário Pós-Experimento** enviado por e-mail.
 
 ---
 
@@ -235,10 +250,10 @@ Cada participante deverá desenvolver **três tarefas independentes**, localizad
 
 Cada pasta contém:
 
-* Um arquivo `README.md` com a descrição detalhada da tarefa;
-* Arquivo(s) `.js` com o código base a ser implementado;
-* Pasta `/tests` com os testes automatizados;
-* Tempo limite estimado para conclusão.
+- Um arquivo `README.md` com a descrição detalhada da tarefa;
+- Arquivo(s) `.js` com o código base a ser implementado;
+- Pasta `/tests` com os testes automatizados;
+- Tempo limite estimado para conclusão.
 
 ---
 
@@ -246,10 +261,10 @@ Cada pasta contém:
 
 ### 1. Requisitos
 
-* **Node.js 20+**
-* **npm** (instalado junto com Node)
-* **VS Code** ou **Cursor IDE**
-* Acesso à internet (para usar a ferramenta de IA, se aplicável)
+- **Node.js 20+**
+- **npm** (instalado junto com Node)
+- **VS Code** ou **Cursor IDE**
+- Acesso à internet (para usar a ferramenta de IA, se aplicável)
 
 ### 2. Instalação
 
@@ -282,10 +297,9 @@ npm install
 
 Implementar um sistema simples de validação de dados de usuário.
 
-* Validação de email, CPF, senha e idade.
-* Tratamento de erros personalizados.
-* Retornar objeto com status e mensagens.
-
+- Validação de email, CPF, senha e idade.
+- Tratamento de erros personalizados.
+- Retornar objeto com status e mensagens.
 
 ---
 
@@ -293,10 +307,9 @@ Implementar um sistema simples de validação de dados de usuário.
 
 Refatorar um código legado propositalmente ruim, mantendo a mesma saída.
 
-* Melhorar nomes de variáveis e modularidade.
-* Remover duplicações.
-* Adicionar tratamento de erros.
-
+- Melhorar nomes de variáveis e modularidade.
+- Remover duplicações.
+- Adicionar tratamento de erros.
 
 ---
 
@@ -304,10 +317,9 @@ Refatorar um código legado propositalmente ruim, mantendo a mesma saída.
 
 Implementar um sistema de gerenciamento de tarefas em memória.
 
-* Classe `TodoManager` com CRUD simples.
-* Validação de dados e tratamento de erros.
-* Paginação local e login simulado.
-
+- Classe `TodoManager` com CRUD simples.
+- Validação de dados e tratamento de erros.
+- Paginação local e login simulado.
 
 ---
 
@@ -317,25 +329,28 @@ Implementar um sistema de gerenciamento de tarefas em memória.
 
 1. Cada participante pertence a **um grupo específico**:
 
-   * **GC** → Grupo Controle (sem IA)
-   * **GE1** → Gemini
-   * **GE2** → ChatGPT
-   * **GE3** → Claude
+   - **GC** → Grupo Controle (sem IA)
+   - **GE1** → Gemini
+   - **GE2** → ChatGPT
+   - **GE3** → Claude
 
 2. Os grupos **experimentais** devem usar **apenas a ferramenta de IA designada** para auxiliar no desenvolvimento.
 
 ### ⏱️ **Registro de Tempo (OBRIGATÓRIO)**
 
 **Antes de iniciar cada tarefa**, adicione um `console.log` no arquivo principal com:
+
 - Indicação de início da tarefa
 - Nome da ferramenta de IA utilizada (ou "Sem IA" para grupo controle)
 
 **Exemplo:**
+
 ```javascript
 console.log("Início Tarefa 1 - Claude");
 ```
 
 Faça o commit imediatamente:
+
 ```bash
 git commit -m "chore: início tarefa 1"
 git push origin main
@@ -345,14 +360,14 @@ Isso permitirá calcular o tempo exato de desenvolvimento de cada tarefa atravé
 
 3. É permitido:
 
-   * Usar prompts para entender requisitos ou gerar código **relacionado à tarefa**.
-   * Ajustar, refatorar e comentar o código livremente.
+   - Usar prompts para entender requisitos ou gerar código **relacionado à tarefa**.
+   - Ajustar, refatorar e comentar o código livremente.
 
 4. É proibido:
 
-   * Consultar repositórios externos prontos.
-   * Compartilhar código entre participantes.
-   * Utilizar múltiplas ferramentas de IA (apenas a designada).
+   - Consultar repositórios externos prontos.
+   - Compartilhar código entre participantes.
+   - Utilizar múltiplas ferramentas de IA (apenas a designada).
 
 5. Todos os commits devem ser feitos com mensagens claras, por exemplo:
 
@@ -371,12 +386,12 @@ A cada `push`, será feita uma análise automática de qualidade de código.
 
 As métricas coletadas incluem:
 
-* **Complexidade ciclomática**
-* **Code smells**
-* **Bugs**
-* **Vulnerabilidades**
-* **Duplicação de código**
-* **Índice de manutenibilidade**
+- **Complexidade ciclomática**
+- **Code smells**
+- **Bugs**
+- **Vulnerabilidades**
+- **Duplicação de código**
+- **Índice de manutenibilidade**
 
 Você pode acompanhar sua análise diretamente no painel do SonarCloud:
 👉 [https://sonarcloud.io/projects](https://sonarcloud.io/projects)
@@ -389,7 +404,7 @@ Cada tarefa será avaliada com base em:
 
 | Categoria              | Descrição                                    | Peso |
 | ---------------------- | -------------------------------------------- | ---- |
-| ✅ Funcionalidade       | Cumprimento dos requisitos e testes passando | 30%  |
+| ✅ Funcionalidade      | Cumprimento dos requisitos e testes passando | 30%  |
 | 🧩 Qualidade de Código | Clareza, organização e boas práticas (Sonar) | 30%  |
 | 🧠 Produtividade       | Tempo e número de commits (Git)              | 20%  |
 | 💬 Percepção           | Feedback pós-experimento (questionário)      | 20%  |
@@ -436,16 +451,16 @@ Essa pipeline executa os testes e envia automaticamente as métricas para o Sona
 
 Se tiver dúvidas durante o experimento:
 
-* Entre em contato com o pesquisador responsável **(Keniel Alves Nunes)**.
-* Ou envie mensagem no canal oficial do experimento no **Discord/WhatsApp**.
+- Entre em contato com o pesquisador responsável **(Keniel Alves Nunes)**.
+- Ou envie mensagem no canal oficial do experimento no **Discord/WhatsApp**.
 
 ---
 
 ## 📅 Importante
 
-* O tempo total estimado para todas as tarefas é de **6 a 7 horas**.
-* As tarefas devem ser concluídas dentro do **prazo combinado**.
-* Após finalizar, responda ao **Questionário Pós-Experimento** enviado por email.
+- O tempo total estimado para todas as tarefas é de **6 a 7 horas**.
+- As tarefas devem ser concluídas dentro do **prazo combinado**.
+- Após finalizar, responda ao **Questionário Pós-Experimento** enviado por email.
 
 ---
 
@@ -454,4 +469,7 @@ Se tiver dúvidas durante o experimento:
 > O objetivo não é apenas “terminar o código”, mas **mostrar como você usa raciocínio e ferramentas de IA para resolver problemas de programação com qualidade**.
 
 Boa sorte e bom código! 🚀
+
+```
+Teste Sonar
 ```
