@@ -1,9 +1,131 @@
 console.log("Início Tarefa 2 - SEM IA");
 
+// Entities
+/**
+ * @typedef {Object} Order
+ * @property {Item[]} items
+ */
+
+/**
+ * @typedef {Object} Item
+ * @property {Number} id
+ * @property {Number} quantity
+ * @property {Number} price
+ */
+
+/**
+ * @typedef {Object} User
+ * @property {Number} id
+ * @property {string} email
+ * @property {string} address
+ * @property {string} type
+ * @property {string} state
+ */
+
+/**
+ * @typedef {Object} Inventory
+ * @property {Function} checkStock
+ */
+
+/**
+ * @typedef {Object} Payment
+ * @property {string} method
+ * @property {Number} amount
+ */
+
+/**
+ * @typedef {Object} Shipping
+ * @property {string} type
+ */
+
+/**
+ * @typedef {Object} Promo
+ * @property {string} code
+ */
+
+/**
+ * @typedef {Object} Error
+ * @property {string} message
+ * @property {string} code
+ */
+
+/**
+ * Functions Props
+ * @typedef {Object} ValidateOrderData
+ * @property {Order} order
+ * @property {Inventory} inventory
+ * @property {Error[]} errors
+
+ * @typedef {Object} ValidateUserData
+ * @property {User} user
+ * @property {Error[]} errors
+
+ * @typedef {Object} ValidatePaymentData
+ * @property {Payment} payment
+ * @property {Error[]} errors
+
+ * @typedef {Object} ValidateAndProcessOrder
+ * @property {Order} order
+ * @property {User} user
+ * @property {Payment} payment
+ * @property {Shipping} shipping
+ * @property {Promo} promo
+ * @property {Inventory} inventory
+ * @property {Error[]} errors
+ */
+
+const validPaymentMethods = [
+  "CREDIT_CARD",
+  "DEBIT_CARD",
+  "PAYPAL",
+  "BANK_TRANSFER",
+  "CRYPTO",
+];
+
+const paymentFeeRates = {
+  CREDIT_CARD: 0.029,
+  DEBIT_CARD: 0.015,
+  PAYPAL: 0.034,
+  BANK_TRANSFER: 0,
+  CRYPTO: 0.01,
+};
+
+const stateTaxesRate = {
+  CA: 0.0875,
+  NY: 0.08,
+  TX: 0.0625,
+  FL: 0,
+  OTHER: 0.05,
+};
+
+const shippingValues = {
+  EXPRESS: 25,
+  STANDARD: 15,
+  ECONOMY: 8,
+  PICKUP: 0,
+};
+
+const promoDiscountRate = {
+  SAVE10: 0.1,
+  SAVE20: 0.2,
+  SAVE30: 0.3,
+  SAVE50: 0.5,
+  FREESHIP: 0,
+  BOGO: 0.5,
+};
+
+const userTypeDiscountRate = {
+  VIP: 0.15,
+  GOLD: 0.1,
+  SILVER: 0.05,
+  BRONZE: 0.02,
+  REGULAR: 0,
+};
+
 class LegacyOrderProcessor {
-  processOrder(orderData, userInfo, paymentInfo, shippingInfo, promoInfo) {
+  processOrder({ orderData, userInfo, paymentInfo, shippingInfo, promoInfo }) {
     var total = 0;
-    var subtotal = 0;
+    let subtotal = 0;
     var tax = 0;
     var shipping = 0;
     var discount = 0;
@@ -141,238 +263,124 @@ class LegacyOrderProcessor {
     return finalTotal;
   }
 
-  calculateOrderTotal(order, customer, payment, delivery, coupon) {
-    var sum = 0;
-    var baseAmount = 0;
-    var userDiscount = 0;
-    var couponDiscount = 0;
-    var deliveryCost = 0;
-    var taxAmount = 0;
-    var paymentCost = 0;
-    var total = 0;
-    var x = 0;
-    var y = 0;
-    var z = 0;
+  /**
+   *
+   * @param {ValidateOrderData} props
+   */
+  validateOrderData({ order, inventory, errors }) {
+    if (!order || order?.items.length <= 0) {
+      errors.push({
+        message: "Pedido inválido, verifique se há itens!",
+        code: "INVALID_ORDER",
+      });
+    }
 
-    if (order) {
-      if (order.products) {
-        for (var j = 0; j < order.products.length; j++) {
-          var product = order.products[j];
-          if (product) {
-            if (product.cost) {
-              if (product.count) {
-                sum = sum + product.cost * product.count;
-              }
-            }
-          }
+    if (!!order && !!order.items.length > 0) {
+      const { items } = order;
+
+      items.forEach((item) => {
+        if (item.quantity <= 0 || item.price <= 0) {
+          errors.push({
+            message: `Verifique se a quantidade e o preço informado do item #${item.id} estão corretos!`,
+            code: "INVALID_ITEM_INFO",
+          });
         }
-      }
-    }
 
-    baseAmount = sum;
-
-    if (customer) {
-      if (customer.level) {
-        if (customer.level == "PREMIUM") {
-          userDiscount = baseAmount * 0.2;
-        } else if (customer.level == "STANDARD") {
-          userDiscount = baseAmount * 0.1;
-        } else if (customer.level == "BASIC") {
-          userDiscount = baseAmount * 0.05;
+        if (!inventory.checkStock(item.id, item.quantity)) {
+          errors.push({
+            message: `Item #${item.id} não está disponível!`,
+            code: "ITEM_NOT_AVAILABLE",
+          });
         }
-      }
+      });
     }
-
-    if (coupon) {
-      if (coupon.discount) {
-        couponDiscount = baseAmount * coupon.discount;
-      }
-    }
-
-    if (delivery) {
-      if (delivery.speed) {
-        if (delivery.speed == "FAST") {
-          deliveryCost = 30;
-        } else if (delivery.speed == "MEDIUM") {
-          deliveryCost = 15;
-        } else if (delivery.speed == "SLOW") {
-          deliveryCost = 5;
-        }
-      }
-    }
-
-    if (customer) {
-      if (customer.location) {
-        if (customer.location == "EUROPE") {
-          taxAmount = (baseAmount - userDiscount - couponDiscount) * 0.2;
-        } else if (customer.location == "USA") {
-          taxAmount = (baseAmount - userDiscount - couponDiscount) * 0.1;
-        } else if (customer.location == "ASIA") {
-          taxAmount = (baseAmount - userDiscount - couponDiscount) * 0.15;
-        }
-      }
-    }
-
-    if (payment) {
-      if (payment.type) {
-        if (payment.type == "CARD") {
-          paymentCost = (baseAmount - userDiscount - couponDiscount) * 0.03;
-        } else if (payment.type == "BANK") {
-          paymentCost = 0;
-        } else if (payment.type == "DIGITAL") {
-          paymentCost = (baseAmount - userDiscount - couponDiscount) * 0.02;
-        }
-      }
-    }
-
-    total =
-      baseAmount -
-      userDiscount -
-      couponDiscount +
-      taxAmount +
-      deliveryCost +
-      paymentCost;
-
-    if (total < 0) {
-      total = 0;
-    }
-
-    total = Math.round(total * 100) / 100;
-
-    return total;
   }
 
-  validateAndProcessOrder(
+  /**
+   *
+   * @param {ValidateUserData} props
+   */
+  validateUserData({ user, errors }) {
+    if (!user || !user.id) {
+      errors.push({
+        message: "Usuário inválido!",
+        code: "INVALID_USER",
+      });
+    }
+
+    if (!user.email) {
+      errors.push({
+        message: "Email do usuário não informádo!",
+        code: "INVALID_USER_EMAIL",
+      });
+    }
+
+    if (!user.address) {
+      errors.push({
+        message: "Endereço do usuário não informádo!",
+        code: "INVALID_USER_ADDRESS",
+      });
+    }
+  }
+
+  /**
+   *
+   * @param {ValidatePaymentData} props
+   */
+  validatePaymentData({ payment, errors }) {
+    if (!payment) {
+      errors.push({
+        message: "Pagamento não informado!",
+        code: "INVALID_PAYMENT",
+      });
+    }
+
+    if (!payment.method || !validPaymentMethods.includes([payment.method])) {
+      errors.push({
+        message: "Método de pagamento inválido ou não informado!",
+        code: "INVALID_PAYMENT_METHOD",
+      });
+    }
+
+    if (!payment.amount || payment.amount <= 0) {
+      errors.push({
+        message: "Valor do pagamento inválido ou não informado!",
+        code: "INVALID_PAYMENT_AMOUNT",
+      });
+    }
+  }
+
+  /**
+   *
+   * @param {ValidateAndProcessOrder} props
+   */
+  validateAndProcessOrder({
     order,
     user,
     payment,
     shipping,
     promo,
     inventory,
-    warehouse,
-    logistics,
-    notifications,
-    analytics,
-    audit,
-    compliance
-  ) {
-    var isValid = true;
-    var errors = [];
-    var warnings = [];
-    var result = {};
-    var temp = 0;
-    var unused = "não usado";
+  }) {
+    const errors = [];
 
-    if (order) {
-      if (order.items) {
-        if (order.items.length > 0) {
-          for (var i = 0; i < order.items.length; i++) {
-            var item = order.items[i];
-            if (item) {
-              if (item.id) {
-                if (item.quantity) {
-                  if (item.price) {
-                    if (item.quantity > 0) {
-                      if (item.price > 0) {
-                        if (inventory) {
-                          if (inventory.checkStock) {
-                            if (inventory.checkStock(item.id, item.quantity)) {
-                            } else {
-                              errors.push(
-                                "Item " + item.id + " não disponível"
-                              );
-                              isValid = false;
-                            }
-                          }
-                        }
-                      } else {
-                        errors.push("Preço inválido para item " + item.id);
-                        isValid = false;
-                      }
-                    } else {
-                      errors.push("Quantidade inválida para item " + item.id);
-                      isValid = false;
-                    }
-                  } else {
-                    errors.push("Preço não informado para item " + item.id);
-                    isValid = false;
-                  }
-                } else {
-                  errors.push("Quantidade não informada para item " + item.id);
-                  isValid = false;
-                }
-              } else {
-                errors.push("ID do item não informado");
-                isValid = false;
-              }
-            } else {
-              errors.push("Item inválido");
-              isValid = false;
-            }
-          }
-        } else {
-          errors.push("Pedido sem itens");
-          isValid = false;
-        }
-      } else {
-        errors.push("Itens do pedido não informados");
-        isValid = false;
-      }
-    } else {
-      errors.push("Pedido não informado");
-      isValid = false;
+    Promise.all([
+      this.validateOrderData({ order, inventory, errors }),
+      this.validateUserData({ user, errors }),
+      this.validatePaymentData({ payment, errors }),
+    ]);
+
+    if (errors.length > 0) {
+      throw new BadRequestException(errors);
     }
 
-    if (user) {
-      if (user.id) {
-        if (user.email) {
-          if (user.address) {
-          } else {
-            errors.push("Endereço do usuário não informado");
-            isValid = false;
-          }
-        } else {
-          errors.push("Email do usuário não informado");
-          isValid = false;
-        }
-      } else {
-        errors.push("ID do usuário não informado");
-        isValid = false;
-      }
-    } else {
-      errors.push("Usuário não informado");
-      isValid = false;
-    }
-
-    if (payment) {
-      if (payment.method) {
-        if (payment.amount) {
-          if (payment.amount > 0) {
-          } else {
-            errors.push("Valor do pagamento inválido");
-            isValid = false;
-          }
-        } else {
-          errors.push("Valor do pagamento não informado");
-          isValid = false;
-        }
-      } else {
-        errors.push("Método de pagamento não informado");
-        isValid = false;
-      }
-    } else {
-      errors.push("Informações de pagamento não fornecidas");
-      isValid = false;
-    }
-
-    if (true || false) {
-      var always = 1;
-      always = always * 2;
-    }
-
-    result.isValid = isValid;
-    result.errors = errors;
-    result.warnings = warnings;
+    const result = this.processOrder({
+      orderData: order,
+      userInfo: user,
+      paymentInfo: payment,
+      shippingInfo: shipping,
+      promoInfo: promo,
+    });
 
     return result;
   }
