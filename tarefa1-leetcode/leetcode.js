@@ -1,4 +1,4 @@
-console.log("Início Tarefa 1 - SEM IA");
+// console.log("Início Tarefa 1 - SEM IA");
 
 /**
  * LeetCode Problem: Valid Parentheses
@@ -30,9 +30,38 @@ console.log("Início Tarefa 1 - SEM IA");
  * Output: true
  */
 
+const map = {
+  ")": "(",
+  "}": "{",
+  "]": "[",
+};
+
 function isValid(s) {
-  // Implementar aqui
-  return false;
+  // se string for vazia ele retorna true
+  if (!s) {
+    return true;
+  }
+
+  // cria uma variavel de stack dos caracteres especificos
+  let stack = [];
+
+  // faz um for pra verificar cada caracter da string especificada pelo tamanho dela
+  for (let i = 0; i < s.length; i++) {
+    // verifica cada caracter se ele contem uma abertura
+    if (s[i] === "(" || s[i] === "[" || s[i] === "{") {
+      // se houver ele coloca na variavel de stack
+      stack.push(s[i]);
+    }
+    // verifica se o ultimo elemento do stack é de fechamento correspondente ao de abertura
+    else if (stack[stack.length - 1] === map[s[i]]) {
+      // se for ele remove e ta tudo certo.
+      stack.pop();
+    } else return false; // se nao, a string está invalida
+  }
+
+  // se houver algo no stack ele não ta com fechamento correto e retorna false
+  // se não houver elementos no stack, todos os caracteres foram fechados corretamente
+  return stack.length ? false : true;
 }
 
 function findFirstError(s) {
