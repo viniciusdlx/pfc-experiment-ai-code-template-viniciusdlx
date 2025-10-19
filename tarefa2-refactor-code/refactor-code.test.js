@@ -23,6 +23,13 @@ describe("Sistema de E-commerce - Refatoração", () => {
     type: "STANDARD",
   };
 
+  const inventory = [
+    { id: 1, quantity: 20, price: 10 },
+    { id: 2, quantity: 20, price: 5 },
+    { id: 3, quantity: 20, price: 25 },
+    { id: 4, quantity: 3, price: 50 },
+  ];
+
   // Implementar testes para processOrder
   test("deve calcular total correto para pedido simples", () => {
     // Testar: pedido com 2 itens, usuário VIP, pagamento cartão, frete padrão
@@ -104,6 +111,52 @@ describe("Sistema de E-commerce - Refatoração", () => {
   test("deve validar pedido com dados corretos", () => {
     // Testar: pedido válido com todos os dados obrigatórios
     // Resultado esperado: isValid = true, sem erros
+
+    const orderProcessor = new LegacyOrderProcessor();
+
+    const orderData = {
+      items: [
+        { id: 1, quantity: 2, price: 10 },
+        { id: 2, quantity: 4, price: 5 },
+        { id: 3, quantity: 8, price: 25 },
+      ],
+    };
+
+    userInfo.level = "PREMIUM";
+    userInfo.type = "VIP";
+    userInfo.state = "NY";
+    promoInfo.code = "SAVE20";
+    paymentInfo.method = "CREDIT_CARD";
+
+    const startTime = performance.now();
+    const result = orderProcessor.validateAndProcessOrder({
+      order: orderData,
+      user: userInfo,
+      payment: paymentInfo,
+      shipping: shippingInfo,
+      promo: promoInfo,
+      inventory: {
+        checkStock: (itemId, quantity) => {
+          console.log("itemId: ", itemId);
+          const item = inventory.find((item) => item.id === itemId);
+
+          if (item.quantity >= quantity) {
+            return true;
+          }
+
+          return false;
+        },
+      },
+    });
+    const endTime = performance.now();
+    console.log(
+      `Result (${JSON.stringify(result)}): ${(endTime - startTime).toFixed(
+        2
+      )}ms`
+    );
+
+    expect(Array.isArray(result)).not.toBeTruthy();
+    expect(!!result.totalDiscount).toBeTruthy();
   });
 
   // Teste de integração

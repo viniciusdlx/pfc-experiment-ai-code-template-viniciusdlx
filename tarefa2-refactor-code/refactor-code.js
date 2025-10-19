@@ -345,7 +345,7 @@ class LegacyOrderProcessor {
       });
     }
 
-    if (!payment.method || !validPaymentMethods.includes([payment.method])) {
+    if (!payment.method || !validPaymentMethods.includes(payment.method)) {
       errors.push({
         message: "Método de pagamento inválido ou não informado!",
         code: "INVALID_PAYMENT_METHOD",
@@ -381,7 +381,7 @@ class LegacyOrderProcessor {
     ]);
 
     if (errors.length > 0) {
-      throw new BadRequestException(errors);
+      return errors;
     }
 
     const result = this.processOrder({
