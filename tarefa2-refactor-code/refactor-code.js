@@ -1,4 +1,4 @@
-console.log("Início Tarefa 2 - SEM IA");
+// console.log("Início Tarefa 2 - SEM IA");
 
 /** Entities
  * 

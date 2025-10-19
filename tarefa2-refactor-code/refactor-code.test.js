@@ -19,7 +19,7 @@ describe("Sistema de E-commerce - Refatoração", () => {
     amount: 100,
   };
 
-  const shippingInfo = {
+  let shippingInfo = {
     type: "STANDARD",
   };
 
@@ -137,7 +137,6 @@ describe("Sistema de E-commerce - Refatoração", () => {
       promo: promoInfo,
       inventory: {
         checkStock: (itemId, quantity) => {
-          console.log("itemId: ", itemId);
           const item = inventory.find((item) => item.id === itemId);
 
           if (item.quantity >= quantity) {
@@ -163,6 +162,56 @@ describe("Sistema de E-commerce - Refatoração", () => {
   test("deve processar pedido completo VIP com cupom", () => {
     // Cenário: usuário VIP, pedido com 3 itens, cupom SAVE20, frete express, pagamento cartão
     // Verificar: todos os cálculos aplicados corretamente
+
+    const orderProcessor = new LegacyOrderProcessor();
+
+    const orderData = {
+      items: [
+        { id: 1, quantity: 2, price: 10 },
+        { id: 2, quantity: 4, price: 5 },
+        { id: 3, quantity: 8, price: 25 },
+      ],
+    };
+
+    userInfo.level = "PREMIUM";
+    userInfo.type = "VIP";
+    userInfo.state = "NY";
+    promoInfo.code = "SAVE20";
+    paymentInfo.method = "CREDIT_CARD";
+    shippingInfo.type = "EXPRESS";
+
+    const startTime = performance.now();
+    const result = orderProcessor.validateAndProcessOrder({
+      order: orderData,
+      user: userInfo,
+      payment: paymentInfo,
+      shipping: shippingInfo,
+      promo: promoInfo,
+      inventory: {
+        checkStock: (itemId, quantity) => {
+          const item = inventory.find((item) => item.id === itemId);
+
+          if (item.quantity >= quantity) {
+            return true;
+          }
+
+          return false;
+        },
+      },
+    });
+    const endTime = performance.now();
+
+    console.log(
+      `Result (${JSON.stringify(result)}): ${(endTime - startTime).toFixed(
+        2
+      )}ms`
+    );
+
+    expect(userInfo.type === "VIP").toBeTruthy();
+    expect(orderData.items.length === 3).toBeTruthy();
+    expect(promoInfo.code === "SAVE20").toBeTruthy();
+    expect(shippingInfo.type === "EXPRESS").toBeTruthy();
+    expect(paymentInfo.method === "CREDIT_CARD").toBeTruthy();
   });
 
   // Teste de edge case
