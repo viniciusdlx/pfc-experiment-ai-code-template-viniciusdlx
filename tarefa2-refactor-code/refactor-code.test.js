@@ -191,7 +191,9 @@ describe("Sistema de E-commerce - Refatoração", () => {
         checkStock: (itemId, quantity) => {
           const item = inventory.find((item) => item.id === itemId);
 
-          if (item.quantity >= quantity) {
+          if (!item) return false;
+
+          if (item?.quantity >= quantity) {
             return true;
           }
 
@@ -218,5 +220,44 @@ describe("Sistema de E-commerce - Refatoração", () => {
   test("deve lidar com pedido inválido", () => {
     // Testar: pedido sem itens, usuário sem dados, pagamento inválido
     // Resultado esperado: erros específicos para cada problema
+
+    const orderProcessor = new LegacyOrderProcessor();
+
+    const orderData = {
+      items: [],
+    };
+
+    userInfo = {};
+    paymentInfo.method = "";
+    shippingInfo.type = "EaPRESS";
+
+    const startTime = performance.now();
+    const result = orderProcessor.validateAndProcessOrder({
+      order: orderData,
+      user: userInfo,
+      payment: paymentInfo,
+      shipping: shippingInfo,
+      promo: promoInfo,
+      inventory: {
+        checkStock: (itemId, quantity) => {
+          const item = inventory.find((item) => item.id === itemId);
+
+          if (item.quantity >= quantity) {
+            return true;
+          }
+
+          return false;
+        },
+      },
+    });
+    const endTime = performance.now();
+
+    console.log(
+      `Result (${JSON.stringify(result)}): ${(endTime - startTime).toFixed(
+        2
+      )}ms`
+    );
+
+    expect(Array.isArray(result)).toBeTruthy();
   });
 });
