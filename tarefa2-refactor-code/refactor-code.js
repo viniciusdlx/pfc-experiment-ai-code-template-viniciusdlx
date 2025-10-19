@@ -15,6 +15,7 @@ console.log("Início Tarefa 2 - SEM IA");
  * @property {string} email
  * @property {string} address
  * @property {string} type
+ * @property {string} level
  * @property {string} state
 
  * @typedef {Object} Inventory
@@ -26,6 +27,7 @@ console.log("Início Tarefa 2 - SEM IA");
 
  * @typedef {Object} Shipping
  * @property {string} type
+ * @property {string} speed
 
  * @typedef {Object} Promo
  * @property {string} code
@@ -115,47 +117,80 @@ const userTypeDiscountRate = {
   REGULAR: 0,
 };
 
+const userLevelDiscountRate = {
+  PREMIUM: 0.2,
+  STANDARD: 0.1,
+  BASIC: 0.05,
+};
+
+const deliveryCostBySpeed = {
+  FAST: 30,
+  MEDIUM: 15,
+  SLOW: 5,
+};
+
 class LegacyOrderProcessor {
   calculateDiscountByTypeUser({ subTotal, userType }) {
-    if (!userType) return 0;
-
     const rate = userTypeDiscountRate[userType];
+
+    if (!rate) return 0;
 
     return subTotal * rate;
   }
 
-  calculateDiscountByPromoCode({ discount, subTotal, code }) {
-    if (!!code) {
-      const rate = promoDiscountRate[code];
+  calculateDiscountByUserLevel({ subTotal, userLevel }) {
+    const rate = userLevelDiscountRate[userLevel];
+
+    if (!rate) return 0;
+
+    return subTotal * rate;
+  }
+
+  calculateDiscountByPromoCode({ subTotal, code }) {
+    const rate = promoDiscountRate[code];
+    if (!!rate) {
       if (rate !== "FREESHIP") {
-        return discount + subTotal * rate;
+        return subTotal * rate;
       }
     }
-    return discount;
+
+    return 0;
   }
 
   calculateShippingByShippingType({ shippingType }) {
     if (!!shippingType) {
       return shippingValues[shippingType];
     }
+
+    return 0;
   }
 
   calculateTaxByUserState({ subTotal, discount, state }) {
-    if (!!state) {
-      const rate = stateTaxesRate[state];
+    const rate = stateTaxesRate[state];
+    if (!!rate) {
       if (rate === "FL") {
         return 0;
       }
       return (subTotal - discount) * rate;
     }
+    return 0;
   }
 
   calculatePaymentFeeByPaymentMethod({ subTotal, discount, method }) {
     const rate = paymentFeeRates[method];
+
+    if (!rate) return 0;
+
     if (rate === "BANK_TRANSFER") {
       return 0;
     }
     return (subTotal - discount) * rate;
+  }
+
+  getShippingCostBySpeed({ speed }) {
+    if (!!speed && deliveryCostBySpeed[speed]) {
+      return deliveryCostBySpeed[speed];
+    }
   }
 
   /**
@@ -166,9 +201,12 @@ class LegacyOrderProcessor {
     let subTotal = 0;
     let tax = 0;
     let shipping = 0;
-    let discount = 0;
+    let discountUserType = 0;
+    let discountPromoCode = 0;
+    let totalDiscount = 0;
     let paymentFee = 0;
     let finalTotal = 0;
+    let appliedPromoCode = false;
 
     orderData.items.forEach((item) => {
       subTotal += item.price * item.quantity;
@@ -178,39 +216,68 @@ class LegacyOrderProcessor {
       shipping = 0;
     }
 
-    discount = this.calculateDiscountByTypeUser({
+    discountUserType += this.calculateDiscountByTypeUser({
       subTotal,
       userType: userInfo.type,
     });
 
-    discount = this.calculateDiscountByPromoCode({
-      discount,
+    discountUserType += this.calculateDiscountByUserLevel({
+      subTotal,
+      userLevel: userInfo.level,
+    });
+
+    totalDiscount += discountUserType;
+
+    discountPromoCode = this.calculateDiscountByPromoCode({
       subTotal,
       code: promoInfo?.code,
     });
 
-    shipping =
-      this.calculateShippingByShippingType({
-        shippingType: shippingInfo.type,
-      }) || shipping;
+    totalDiscount += discountPromoCode;
 
-    tax =
-      this.calculateTaxByUserState({
-        subTotal,
-        discount,
-        state: userInfo.state,
-      }) || tax;
+    shipping += this.getShippingCostBySpeed({
+      speed: shippingInfo.speed,
+    });
+
+    if (!!discountPromoCode) {
+      appliedPromoCode = true;
+    }
+
+    shipping = this.calculateShippingByShippingType({
+      shippingType: shippingInfo.type,
+    });
+
+    tax = this.calculateTaxByUserState({
+      subTotal,
+      totalDiscount,
+      state: userInfo.state,
+    });
 
     paymentFee = this.calculatePaymentFeeByPaymentMethod({
       subTotal,
-      discount,
+      discount: totalDiscount,
       method: paymentInfo.method,
     });
 
-    finalTotal = subTotal - discount + tax + shipping + paymentFee;
+    finalTotal = subTotal - totalDiscount + tax + shipping + paymentFee;
+
     finalTotal = Math.round(finalTotal * 100) / 100;
 
-    return finalTotal;
+    if (finalTotal < 0) {
+      finalTotal = 0;
+    }
+
+    return {
+      finalTotal,
+      subTotal,
+      tax,
+      shipping,
+      discountUserType,
+      discountPromoCode,
+      totalDiscount,
+      appliedPromoCode,
+      paymentFee,
+    };
   }
 
   /**
