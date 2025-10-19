@@ -1,56 +1,42 @@
 console.log("Início Tarefa 2 - SEM IA");
 
-// Entities
-/**
+/** Entities
+ * 
  * @typedef {Object} Order
  * @property {Item[]} items
- */
 
-/**
  * @typedef {Object} Item
  * @property {Number} id
  * @property {Number} quantity
  * @property {Number} price
- */
 
-/**
  * @typedef {Object} User
  * @property {Number} id
  * @property {string} email
  * @property {string} address
  * @property {string} type
  * @property {string} state
- */
 
-/**
  * @typedef {Object} Inventory
  * @property {Function} checkStock
- */
 
-/**
  * @typedef {Object} Payment
  * @property {string} method
  * @property {Number} amount
- */
 
-/**
  * @typedef {Object} Shipping
  * @property {string} type
- */
 
-/**
  * @typedef {Object} Promo
  * @property {string} code
- */
 
-/**
  * @typedef {Object} Error
  * @property {string} message
  * @property {string} code
  */
 
-/**
- * Functions Props
+/** Functions Props
+ * 
  * @typedef {Object} ValidateOrderData
  * @property {Order} order
  * @property {Inventory} inventory
@@ -141,11 +127,11 @@ class LegacyOrderProcessor {
   calculateDiscountByPromoCode({ discount, subTotal, code }) {
     if (!!code) {
       const rate = promoDiscountRate[code];
-
       if (rate !== "FREESHIP") {
         return discount + subTotal * rate;
       }
     }
+    return discount;
   }
 
   calculateShippingByShippingType({ shippingType }) {
@@ -157,22 +143,18 @@ class LegacyOrderProcessor {
   calculateTaxByUserState({ subTotal, discount, state }) {
     if (!!state) {
       const rate = stateTaxesRate[state];
-
       if (rate === "FL") {
         return 0;
       }
-
       return (subTotal - discount) * rate;
     }
   }
 
   calculatePaymentFeeByPaymentMethod({ subTotal, discount, method }) {
     const rate = paymentFeeRates[method];
-
     if (rate === "BANK_TRANSFER") {
       return 0;
     }
-
     return (subTotal - discount) * rate;
   }
 
@@ -188,28 +170,11 @@ class LegacyOrderProcessor {
     let paymentFee = 0;
     let finalTotal = 0;
 
-    if (orderData != null) {
-      if (orderData.items != null) {
-        if (orderData.items.length > 0) {
-          for (var i = 0; i < orderData.items.length; i++) {
-            var item = orderData.items[i];
-            if (item != null) {
-              if (item.price != null) {
-                if (item.quantity != null) {
-                  if (item.price > 0) {
-                    if (item.quantity > 0) {
-                      subtotal = subtotal + item.price * item.quantity;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    orderData.items.forEach((item) => {
+      subTotal += item.price * item.quantity;
+    });
 
-    if (promoInfo.code === "FREESHIP") {
+    if (promoInfo?.code === "FREESHIP") {
       shipping = 0;
     }
 
@@ -221,18 +186,20 @@ class LegacyOrderProcessor {
     discount = this.calculateDiscountByPromoCode({
       discount,
       subTotal,
-      code: promoInfo.code,
+      code: promoInfo?.code,
     });
 
-    shipping = this.calculateShippingByShippingType({
-      shippingType: shippingInfo.type,
-    });
+    shipping =
+      this.calculateShippingByShippingType({
+        shippingType: shippingInfo.type,
+      }) || shipping;
 
-    tax = this.calculateTaxByUserState({
-      subTotal,
-      discount,
-      state: userInfo.state,
-    });
+    tax =
+      this.calculateTaxByUserState({
+        subTotal,
+        discount,
+        state: userInfo.state,
+      }) || tax;
 
     paymentFee = this.calculatePaymentFeeByPaymentMethod({
       subTotal,
