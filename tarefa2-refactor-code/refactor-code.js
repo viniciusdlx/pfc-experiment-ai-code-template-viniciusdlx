@@ -72,6 +72,14 @@ console.log("Início Tarefa 2 - SEM IA");
  * @property {Promo} promo
  * @property {Inventory} inventory
  * @property {Error[]} errors
+ * 
+ * @typedef {Object} ProcessOrder
+ * @property {Order} orderData
+ * @property {User} userInfo
+ * @property {Payment} paymentInfo
+ * @property {Shipping} shippingInfo
+ * @property {Promo} promoInfo
+ * @property {Error[]} errors
  */
 
 const validPaymentMethods = [
@@ -110,7 +118,6 @@ const promoDiscountRate = {
   SAVE20: 0.2,
   SAVE30: 0.3,
   SAVE50: 0.5,
-  FREESHIP: 0,
   BOGO: 0.5,
 };
 
@@ -123,19 +130,63 @@ const userTypeDiscountRate = {
 };
 
 class LegacyOrderProcessor {
+  calculateDiscountByTypeUser({ subTotal, userType }) {
+    if (!userType) return 0;
+
+    const rate = userTypeDiscountRate[userType];
+
+    return subTotal * rate;
+  }
+
+  calculateDiscountByPromoCode({ discount, subTotal, code }) {
+    if (!!code) {
+      const rate = promoDiscountRate[code];
+
+      if (rate !== "FREESHIP") {
+        return discount + subTotal * rate;
+      }
+    }
+  }
+
+  calculateShippingByShippingType({ shippingType }) {
+    if (!!shippingType) {
+      return shippingValues[shippingType];
+    }
+  }
+
+  calculateTaxByUserState({ subTotal, discount, state }) {
+    if (!!state) {
+      const rate = stateTaxesRate[state];
+
+      if (rate === "FL") {
+        return 0;
+      }
+
+      return (subTotal - discount) * rate;
+    }
+  }
+
+  calculatePaymentFeeByPaymentMethod({ subTotal, discount, method }) {
+    const rate = paymentFeeRates[method];
+
+    if (rate === "BANK_TRANSFER") {
+      return 0;
+    }
+
+    return (subTotal - discount) * rate;
+  }
+
+  /**
+   *
+   * @param {ProcessOrder} props
+   */
   processOrder({ orderData, userInfo, paymentInfo, shippingInfo, promoInfo }) {
-    var total = 0;
-    let subtotal = 0;
-    var tax = 0;
-    var shipping = 0;
-    var discount = 0;
-    var finalTotal = 0;
-    var temp1 = 0;
-    var temp2 = 0;
-    var temp3 = 0;
-    var unusedVar1 = "não usado";
-    var unusedVar2 = 123;
-    var unusedVar3 = true;
+    let subTotal = 0;
+    let tax = 0;
+    let shipping = 0;
+    let discount = 0;
+    let paymentFee = 0;
+    let finalTotal = 0;
 
     if (orderData != null) {
       if (orderData.items != null) {
@@ -158,107 +209,39 @@ class LegacyOrderProcessor {
       }
     }
 
-    if (userInfo != null) {
-      if (userInfo.type != null) {
-        if (userInfo.type == "VIP") {
-          discount = subtotal * 0.15;
-        } else if (userInfo.type == "GOLD") {
-          discount = subtotal * 0.1;
-        } else if (userInfo.type == "SILVER") {
-          discount = subtotal * 0.05;
-        } else if (userInfo.type == "BRONZE") {
-          discount = subtotal * 0.02;
-        } else if (userInfo.type == "REGULAR") {
-          discount = 0;
-        } else {
-          discount = 0;
-        }
-      }
+    if (promoInfo.code === "FREESHIP") {
+      shipping = 0;
     }
 
-    if (promoInfo != null) {
-      if (promoInfo.code != null) {
-        if (promoInfo.code == "SAVE10") {
-          discount = discount + subtotal * 0.1;
-        } else if (promoInfo.code == "SAVE20") {
-          discount = discount + subtotal * 0.2;
-        } else if (promoInfo.code == "SAVE30") {
-          discount = discount + subtotal * 0.3;
-        } else if (promoInfo.code == "SAVE50") {
-          discount = discount + subtotal * 0.5;
-        } else if (promoInfo.code == "FREESHIP") {
-          shipping = 0;
-        } else if (promoInfo.code == "BOGO") {
-          discount = discount + subtotal * 0.5;
-        }
-      }
-    }
+    discount = this.calculateDiscountByTypeUser({
+      subTotal,
+      userType: userInfo.type,
+    });
 
-    if (shippingInfo != null) {
-      if (shippingInfo.type != null) {
-        if (shippingInfo.type == "EXPRESS") {
-          shipping = 25;
-        } else if (shippingInfo.type == "STANDARD") {
-          shipping = 15;
-        } else if (shippingInfo.type == "ECONOMY") {
-          shipping = 8;
-        } else if (shippingInfo.type == "PICKUP") {
-          shipping = 0;
-        }
-      }
-    }
+    discount = this.calculateDiscountByPromoCode({
+      discount,
+      subTotal,
+      code: promoInfo.code,
+    });
 
-    if (userInfo != null) {
-      if (userInfo.state != null) {
-        if (userInfo.state == "CA") {
-          tax = (subtotal - discount) * 0.0875;
-        } else if (userInfo.state == "NY") {
-          tax = (subtotal - discount) * 0.08;
-        } else if (userInfo.state == "TX") {
-          tax = (subtotal - discount) * 0.0625;
-        } else if (userInfo.state == "FL") {
-          tax = 0;
-        } else {
-          tax = (subtotal - discount) * 0.05;
-        }
-      }
-    }
+    shipping = this.calculateShippingByShippingType({
+      shippingType: shippingInfo.type,
+    });
 
-    var paymentFee = 0;
-    if (paymentInfo != null) {
-      if (paymentInfo.method != null) {
-        if (paymentInfo.method == "CREDIT_CARD") {
-          paymentFee = (subtotal - discount) * 0.029;
-        } else if (paymentInfo.method == "DEBIT_CARD") {
-          paymentFee = (subtotal - discount) * 0.015;
-        } else if (paymentInfo.method == "PAYPAL") {
-          paymentFee = (subtotal - discount) * 0.034;
-        } else if (paymentInfo.method == "BANK_TRANSFER") {
-          paymentFee = 0;
-        } else if (paymentInfo.method == "CRYPTO") {
-          paymentFee = (subtotal - discount) * 0.01;
-        }
-      }
-    }
+    tax = this.calculateTaxByUserState({
+      subTotal,
+      discount,
+      state: userInfo.state,
+    });
 
-    if (true || false) {
-      var alwaysTrue = 1;
-      var anotherVar = 2;
-      anotherVar = anotherVar * 3;
-      anotherVar = anotherVar + 5;
-    }
+    paymentFee = this.calculatePaymentFeeByPaymentMethod({
+      subTotal,
+      discount,
+      method: paymentInfo.method,
+    });
 
-    finalTotal = subtotal - discount + tax + shipping + paymentFee;
-
-    if (finalTotal < 0) {
-      finalTotal = 0;
-    }
-
+    finalTotal = subTotal - discount + tax + shipping + paymentFee;
     finalTotal = Math.round(finalTotal * 100) / 100;
-
-    var unused1 = finalTotal;
-    var unused2 = finalTotal * 2;
-    var unused3 = finalTotal / 2;
 
     return finalTotal;
   }
@@ -268,13 +251,6 @@ class LegacyOrderProcessor {
    * @param {ValidateOrderData} props
    */
   validateOrderData({ order, inventory, errors }) {
-    if (!order || order?.items.length <= 0) {
-      errors.push({
-        message: "Pedido inválido, verifique se há itens!",
-        code: "INVALID_ORDER",
-      });
-    }
-
     if (!!order && !!order.items.length > 0) {
       const { items } = order;
 
